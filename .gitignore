@@ -2,3 +2,15 @@
 MANIFEST 2.20.42 PM.in
 
 setup 2.20.42 PM.py
+
+tango_comments.egg-info/dependency_links.txt
+
+tango_comments.egg-info/not-zip-safe
+
+tango_comments.egg-info/PKG-INFO
+
+tango_comments.egg-info/SOURCES.txt
+
+tango_comments.egg-info/top_level.txt
+
+*.pyc
