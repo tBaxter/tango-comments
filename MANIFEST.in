@@ -1,0 +1,5 @@
+include LICENSE README.md CHANGES.md
+recursive-include tango_comments *.html
+recursive-include tango_comments *.json
+recursive-include tango_comments *.md
+recursive-include docs *.txt
