@@ -61,7 +61,7 @@ class BaseCommentNode(template.Node):
         self.ctype = ctype
         self.object_pk_expr = object_pk_expr
         self.object_expr = object_expr
-        self.comment = comment
+        self.text = comment
 
     def render(self, context):
         qs = self.get_query_set(context)
