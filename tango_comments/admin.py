@@ -8,6 +8,9 @@ from django.contrib.comments import get_model
 from django.contrib.comments.views.moderation import perform_flag, perform_approve, perform_delete
 
 
+from tango_admin.admin_actions import nuke_users
+
+
 class UsernameSearch(object):
     """The User object may not be auth.User, so we need to provide
     a mechanism for issuing the equivalent of a .filter(user__username=...)
@@ -15,6 +18,8 @@ class UsernameSearch(object):
     """
     def __str__(self):
         return 'user__%s' % get_user_model().USERNAME_FIELD
+
+    
 
 
 class CommentsAdmin(admin.ModelAdmin):
@@ -36,7 +41,7 @@ class CommentsAdmin(admin.ModelAdmin):
     ordering = ('-submit_date',)
     raw_id_fields = ('user',)
     search_fields = ('comment', UsernameSearch(), 'user_name', 'user_email', 'user_url', 'ip_address')
-    actions = ["flag_comments", "approve_comments", "remove_comments"]
+    actions = ["flag_comments", "approve_comments", "remove_comments", nuke_users]
 
     def get_actions(self, request):
         actions = super(CommentsAdmin, self).get_actions(request)

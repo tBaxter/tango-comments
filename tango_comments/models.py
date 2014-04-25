@@ -35,12 +35,12 @@ class Comment(BaseUserContentModel):
 
     content_type = models.ForeignKey(ContentType,
             verbose_name=_('content type'),
-            related_name="content_type_set_for_%(class)s")
+            related_name="contenttype_set_for_%(class)s")
     object_pk = models.TextField(_('object ID'))
     content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_pk")
 
     # Metadata about the comment
-    site = models.ForeignKey(Site)
+    site = models.ForeignKey(Site, related_name='comment_site')
 
     # Manager
     objects = CommentManager()
@@ -95,7 +95,7 @@ class CommentFlag(models.Model):
     design users are only allowed to flag a comment with a given flag once;
     if you want rating look elsewhere.
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'), related_name="comment_flags")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'), related_name="comment_flag")
     comment = models.ForeignKey(Comment, verbose_name=_('comment'), related_name="flags")
     flag = models.CharField(_('flag'), max_length=30, db_index=True)
     flag_date = models.DateTimeField(_('date'), default=None)
