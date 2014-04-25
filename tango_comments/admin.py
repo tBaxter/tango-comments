@@ -24,6 +24,8 @@ class UsernameSearch(object):
 
 
 class CommentsAdmin(admin.ModelAdmin):
+    readonly_fields = ("post_date",)
+    
     fieldsets = (
         (None,
            {'fields': ('content_type', 'object_pk', 'site')}
