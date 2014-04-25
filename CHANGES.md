@@ -1,5 +1,11 @@
 # Tango Comments Change Log
 
+### 0.1.5
+More migration to BaseUserContentmodel
+
+### 0.1.4 
+Admin 
+
 ### 0.1.3 
 Fixed lots of migration issues
 

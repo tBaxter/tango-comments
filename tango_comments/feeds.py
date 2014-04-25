@@ -25,7 +25,7 @@ class LatestCommentFeed(Feed):
             is_public = True,
             is_removed = False,
         )
-        return qs.order_by('-submit_date')[:40]
+        return qs.order_by('-post_date')[:40]
 
     def item_pubdate(self, item):
-        return item.submit_date
+        return item.post_date

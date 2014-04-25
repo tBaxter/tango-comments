@@ -9,7 +9,7 @@ from ..models import Author, Article
 class CommentModelTests(CommentTestCase):
     def testSave(self):
         for c in self.createSomeComments():
-            self.assertNotEqual(c.submit_date, None)
+            self.assertNotEqual(c.post_date, None)
 
     def testUserProperties(self):
         c1, c2, c3, c4 = self.createSomeComments()

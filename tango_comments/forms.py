@@ -138,10 +138,10 @@ class CommentDetailsForm(CommentSecurityForm):
             content_type = ContentType.objects.get_for_model(self.target_object),
             object_pk    = force_text(self.target_object._get_pk_val()),
             user_name    = self.cleaned_data["name"],
-            user_email   = self.cleaned_data["email"],
-            user_url     = self.cleaned_data["url"],
+            #user_email   = self.cleaned_data["email"],
+            #user_url     = self.cleaned_data["url"],
             comment      = self.cleaned_data["comment"],
-            submit_date  = timezone.now(),
+            post_date    = timezone.now(),
             site_id      = settings.SITE_ID,
             is_public    = True,
             is_removed   = False,
@@ -162,7 +162,7 @@ class CommentDetailsForm(CommentSecurityForm):
             user_url = new.user_url,
         )
         for old in possible_duplicates:
-            if old.submit_date.date() == new.submit_date.date() and old.comment == new.comment:
+            if old.post_date.date() == new.post_date.date() and old.comment == new.comment:
                 return old
 
         return new
