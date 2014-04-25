@@ -1,6 +1,9 @@
 # Tango Comments Change Log
 
 ### 0.1.8
+More evil imports
+
+### 0.1.8
 Fixed evil import
 
 ### 0.1.7
