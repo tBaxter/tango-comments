@@ -7,7 +7,7 @@ with open('docs/requirements.txt') as f:
 
 setup(
     name='tango-comments',
-    version='0.1.2',
+    version='0.1.3',
     author=u'Tim Baxter',
     author_email='mail.baxter@gmail.com',
     url='http://github.com/tBaxter/tango-comments',

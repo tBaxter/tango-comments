@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.comments.managers import CommentManager
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -10,6 +9,9 @@ from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
 from tango_shared.models import BaseUserContentModel
+
+from .managers import CommentManager
+
 
 COMMENT_MAX_LENGTH = getattr(settings, 'COMMENT_MAX_LENGTH', 3000)
 

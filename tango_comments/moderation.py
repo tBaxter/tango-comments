@@ -29,7 +29,7 @@ a Weblog::
 Then we create a ``CommentModerator`` subclass specifying some
 moderation options::
 
-    from django.contrib.comments.moderation import CommentModerator, moderator
+    from tango_comments.moderation import CommentModerator, moderator
 
     class EntryModerator(CommentModerator):
         email_notification = True
@@ -58,12 +58,15 @@ import datetime
 
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.comments import signals
 from django.db.models.base import ModelBase
 from django.template import Context, loader
 from django.contrib import comments
 from django.contrib.sites.models import get_current_site
 from django.utils import timezone
+
+
+from tango_comments import signals
+
 
 class AlreadyModerated(Exception):
     """

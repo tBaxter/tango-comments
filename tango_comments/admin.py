@@ -2,10 +2,11 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.contrib.comments.models import Comment
 from django.utils.translation import ugettext_lazy as _, ungettext
-from django.contrib.comments import get_model
-from django.contrib.comments.views.moderation import perform_flag, perform_approve, perform_delete
+
+from tango_comments import get_model
+from .models import Comment
+from .views.moderation import perform_flag, perform_approve, perform_delete
 
 
 from tango_admin.admin_actions import nuke_users

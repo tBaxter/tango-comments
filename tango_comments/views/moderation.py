@@ -4,11 +4,12 @@ from django import template
 from django.conf import settings
 from django.contrib import comments
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.comments import signals
-from django.contrib.comments.views.utils import next_redirect, confirmation_view
 from django.shortcuts import get_object_or_404, render_to_response
 from django.views.decorators.csrf import csrf_protect
 
+
+from tango_comments import signals
+from tango_comments.views.utils import next_redirect, confirmation_view
 
 @csrf_protect
 @login_required

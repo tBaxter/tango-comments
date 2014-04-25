@@ -1,6 +1,9 @@
 # Tango Comments Change Log
 
-### 0.1.1 
+### 0.1.3 
+Fixed lots of migration issues
+
+### 0.1.2 
 Field name mismatch from common base
 
 ### 0.1.1 
