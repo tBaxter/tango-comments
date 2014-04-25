@@ -1,6 +1,9 @@
 # Tango Comments Change Log
 
 ### 0.1.6
+More admin changes
+
+### 0.1.6
 Define readonly fields
 
 ### 0.1.5

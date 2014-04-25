@@ -25,7 +25,7 @@ class UsernameSearch(object):
 
 class CommentsAdmin(admin.ModelAdmin):
     readonly_fields = ("post_date",)
-    
+
     fieldsets = (
         (None,
            {'fields': ('content_type', 'object_pk', 'site')}
@@ -38,12 +38,12 @@ class CommentsAdmin(admin.ModelAdmin):
         ),
      )
 
-    list_display = ('name', 'content_type', 'object_pk', 'ip_address', 'post_date', 'is_public', 'is_removed')
+    list_display = ('user', 'content_type', 'object_pk', 'ip_address', 'post_date', 'is_public', 'is_removed')
     list_filter = ('post_date', 'site', 'is_public', 'is_removed')
     date_hierarchy = 'post_date'
     ordering = ('-post_date',)
     raw_id_fields = ('user',)
-    search_fields = ('comment', UsernameSearch(), 'user_name', 'user_email', 'user_url', 'ip_address')
+    search_fields = ('text', UsernameSearch(), 'user_name', 'user_email', 'user_url', 'ip_address')
     actions = ["flag_comments", "approve_comments", "remove_comments", nuke_users]
 
     def get_actions(self, request):
