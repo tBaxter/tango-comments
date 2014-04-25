@@ -57,6 +57,8 @@ class BaseCommentNode(template.Node):
         if ctype is None and object_expr is None:
             raise template.TemplateSyntaxError("Comment nodes must be given either a literal object or a ctype and object pk.")
         self.comment_model = comments.get_model()
+        my_comment_model =  self.comment_model
+        return my_comment_model
         self.as_varname = as_varname
         self.ctype = ctype
         self.object_pk_expr = object_pk_expr
