@@ -2,8 +2,9 @@ from django import template
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.contrib import comments
 from django.utils.encoding import smart_text
+
+import tango_comments as comments
 
 register = template.Library()
 
@@ -66,7 +67,6 @@ class BaseCommentNode(template.Node):
         self.text = comment
 
     def render(self, context):
-        foo = self.get_query_set(context)
         qs = self.get_query_set(context)
         context[self.as_varname] = self.get_context_value_from_queryset(context, qs)
         return ''

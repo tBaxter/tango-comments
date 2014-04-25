@@ -1,6 +1,9 @@
 # Tango Comments Change Log
 
-### 0.1.6
+### 0.1.8
+Fixed evil import
+
+### 0.1.7
 More admin changes
 
 ### 0.1.6
