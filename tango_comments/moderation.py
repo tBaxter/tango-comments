@@ -57,14 +57,13 @@ class.
 import datetime
 
 from django.conf import settings
+from django.contrib.sites.models import get_current_site
 from django.core.mail import send_mail
 from django.db.models.base import ModelBase
 from django.template import Context, loader
-from django.contrib import comments
-from django.contrib.sites.models import get_current_site
 from django.utils import timezone
 
-
+import tango_comments as comments
 from tango_comments import signals
 
 

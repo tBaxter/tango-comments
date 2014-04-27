@@ -162,7 +162,7 @@ class CommentDetailsForm(CommentSecurityForm):
             user_url = new.user_url,
         )
         for old in possible_duplicates:
-            if old.post_date.date() == new.post_date.date() and old.comment == new.comment:
+            if old.post_date.date() == new.post_date.date() and old.text == new.text:
                 return old
 
         return new
@@ -172,7 +172,7 @@ class CommentDetailsForm(CommentSecurityForm):
         If COMMENTS_ALLOW_PROFANITIES is False, check that the comment doesn't
         contain anything in PROFANITIES_LIST.
         """
-        comment = self.cleaned_data["comment"]
+        comment = self.cleaned_data["text"]
         if settings.COMMENTS_ALLOW_PROFANITIES == False:
             bad_words = [w for w in settings.PROFANITIES_LIST if w in comment.lower()]
             if bad_words:
