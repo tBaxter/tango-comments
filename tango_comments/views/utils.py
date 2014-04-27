@@ -12,8 +12,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, resolve_url
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import comments
 from django.utils.http import is_safe_url
+
+import tango_comments as comments
 
 def next_redirect(request, fallback, **get_kwargs):
     """
