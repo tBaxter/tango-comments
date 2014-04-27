@@ -140,7 +140,7 @@ class CommentDetailsForm(CommentSecurityForm):
             user_name    = self.cleaned_data["name"],
             #user_email   = self.cleaned_data["email"],
             #user_url     = self.cleaned_data["url"],
-            comment      = self.cleaned_data["comment"],
+            text         = self.cleaned_data["comment"],
             post_date    = timezone.now(),
             site_id      = settings.SITE_ID,
             is_public    = True,
