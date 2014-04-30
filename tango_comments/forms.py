@@ -159,7 +159,7 @@ class CommentDetailsForm(CommentSecurityForm):
         ).filter(
             content_type = new.content_type,
             object_pk = new.object_pk,
-            name = new.user_name,
+            #name = new.user_name,
             #user_email = new.user_email,
             #user_url = new.user_url,
         )
