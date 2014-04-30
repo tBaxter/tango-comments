@@ -139,7 +139,7 @@ class CommentDetailsForm(CommentSecurityForm):
         return dict(
             content_type = ContentType.objects.get_for_model(self.target_object),
             object_pk    = force_text(self.target_object._get_pk_val()),
-            user         = UserModel.objects.get(username=self.cleaned_data["name"]),
+            #user         = UserModel.objects.get(username=self.cleaned_data["name"]),
             #user_email   = self.cleaned_data["email"],
             #user_url     = self.cleaned_data["url"],
             text         = self.cleaned_data["text"],
