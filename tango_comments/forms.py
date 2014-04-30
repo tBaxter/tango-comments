@@ -1,8 +1,9 @@
 import time
 from django import forms
-from django.forms.util import ErrorDict
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.forms.util import ErrorDict
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.encoding import force_text
 from django.utils.text import get_text_list
@@ -12,6 +13,7 @@ from django.utils.translation import ungettext, ugettext, ugettext_lazy as _
 
 from .models import Comment
 
+UserModel = get_user_model()
 
 COMMENT_MAX_LENGTH = getattr(settings,'COMMENT_MAX_LENGTH', 3000)
 
@@ -137,7 +139,7 @@ class CommentDetailsForm(CommentSecurityForm):
         return dict(
             content_type = ContentType.objects.get_for_model(self.target_object),
             object_pk    = force_text(self.target_object._get_pk_val()),
-            name         = self.cleaned_data["name"],
+            user         = UserModel.objects.get(username=self.cleaned_data["name"]),
             #user_email   = self.cleaned_data["email"],
             #user_url     = self.cleaned_data["url"],
             text         = self.cleaned_data["text"],
