@@ -97,12 +97,10 @@ class CommentSecurityForm(forms.Form):
 class CommentDetailsForm(CommentSecurityForm):
     """
     Handles the specific details of the comment (name, comment, etc.).
+    Requires user to be authenitcated, because only a fool would allow unauthenticated users to comment.
+    
     """
-    name          = forms.CharField(label=_("Name"), max_length=50)
-    email         = forms.EmailField(label=_("Email address"))
-    url           = forms.URLField(label=_("URL"), required=False)
-    text          = forms.CharField(label=_('Comment'), widget=forms.Textarea,
-                                    max_length=COMMENT_MAX_LENGTH)
+    text = forms.CharField(label=_('Comment'), widget=forms.Textarea, max_length=COMMENT_MAX_LENGTH)
 
     def get_comment_object(self):
         """
@@ -139,9 +137,6 @@ class CommentDetailsForm(CommentSecurityForm):
         return dict(
             content_type = ContentType.objects.get_for_model(self.target_object),
             object_pk    = force_text(self.target_object._get_pk_val()),
-            #user         = UserModel.objects.get(username=self.cleaned_data["name"]),
-            #user_email   = self.cleaned_data["email"],
-            #user_url     = self.cleaned_data["url"],
             text         = self.cleaned_data["text"],
             post_date    = timezone.now(),
             site_id      = settings.SITE_ID,
@@ -158,10 +153,7 @@ class CommentDetailsForm(CommentSecurityForm):
             self.target_object._state.db
         ).filter(
             content_type = new.content_type,
-            object_pk = new.object_pk,
-            #name = new.user_name,
-            #user_email = new.user_email,
-            #user_url = new.user_url,
+            object_pk = new.object_pk
         )
         for old in possible_duplicates:
             if old.post_date.date() == new.post_date.date() and old.text == new.text:

@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.1.11
+Settling on authenticated users only.
+
 ### 0.1.10
 Fixed inconsistent fieldname on form
 

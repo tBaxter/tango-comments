@@ -43,7 +43,7 @@ class CommentsAdmin(admin.ModelAdmin):
     date_hierarchy = 'post_date'
     ordering = ('-post_date',)
     raw_id_fields = ('user',)
-    search_fields = ('text', UsernameSearch(), 'user_name', 'user_email', 'user_url', 'ip_address')
+    search_fields = ('text', UsernameSearch(), 'user__name', 'user__email', 'ip_address')
     actions = ["flag_comments", "approve_comments", "remove_comments", nuke_users]
 
     def get_actions(self, request):
