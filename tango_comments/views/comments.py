@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from django import http
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.shortcuts import render_to_response
@@ -81,15 +82,13 @@ def post_comment(request, next=None, using=None):
             "The comment form failed security verification: %s" % \
                 escape(str(form.security_errors())))
 
+    # Check for next
+    if not next:
+        next = request.get_full_path()
+
     # If there are errors or if we requested a preview show the comment
     if form.errors or preview:
         template_list = [
-            # These first two exist for purely historical reasons.
-            # Django v1.0 and v1.1 allowed the underscore format for
-            # preview templates, so we have to preserve that format.
-            "comments/%s_%s_preview.html" % (model._meta.app_label, model._meta.module_name),
-            "comments/%s_preview.html" % model._meta.app_label,
-            # Now the usual directory based template hierarchy.
             "comments/%s/%s/preview.html" % (model._meta.app_label, model._meta.module_name),
             "comments/%s/preview.html" % model._meta.app_label,
             "comments/preview.html",
@@ -128,6 +127,7 @@ def post_comment(request, next=None, using=None):
         comment=comment,
         request=request
     )
+    messages.success(request, 'Your comment was saved.')
 
     return next_redirect(request, fallback=next or 'comments-comment-done',
         c=comment._get_pk_val())

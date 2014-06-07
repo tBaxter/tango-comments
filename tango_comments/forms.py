@@ -1,4 +1,5 @@
 import time
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -179,7 +180,7 @@ class CommentDetailsForm(CommentSecurityForm):
         return comment
 
 class CommentForm(CommentDetailsForm):
-    honeypot      = forms.CharField(required=False,
+    honeypot = forms.CharField(required=False,
                                     label=_('If you enter anything in this field '\
                                             'your comment will be treated as spam'))
 

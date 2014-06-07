@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.2
+Attempting better post-comment redirecting
+
 ### 0.1.11
 Settling on authenticated users only.
 
