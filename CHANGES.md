@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.4.0
+Template cleanup
+
 ### 0.3.1
 Attrs fix.
 

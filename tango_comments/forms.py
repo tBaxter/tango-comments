@@ -104,6 +104,7 @@ class CommentDetailsForm(CommentSecurityForm):
     """
     #text = forms.CharField(label=_('Comment'), widget=forms.Textarea, max_length=COMMENT_MAX_LENGTH)
     text = forms.CharField(
+        label='', 
         widget=forms.Textarea(attrs={'tabindex': '1', 'placeholder': COMMENT_PLACEHOLDER}),
         max_length=COMMENT_MAX_LENGTH,
     )
