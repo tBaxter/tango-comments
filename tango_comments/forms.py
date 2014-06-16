@@ -13,10 +13,11 @@ from django.utils.translation import ungettext, ugettext, ugettext_lazy as _
 
 
 from .models import Comment
+from .settings import COMMENT_PLACEHOLDER, COMMENT_MAX_LENGTH
+
 
 UserModel = get_user_model()
 
-COMMENT_MAX_LENGTH = getattr(settings,'COMMENT_MAX_LENGTH', 3000)
 
 class CommentSecurityForm(forms.Form):
     """
@@ -98,10 +99,15 @@ class CommentSecurityForm(forms.Form):
 class CommentDetailsForm(CommentSecurityForm):
     """
     Handles the specific details of the comment (name, comment, etc.).
-    Requires user to be authenitcated, because only a fool would allow unauthenticated users to comment.
+    Requires user to be authenticated, because only a fool would allow unauthenticated users to comment.
     
     """
-    text = forms.CharField(label=_('Comment'), widget=forms.Textarea, max_length=COMMENT_MAX_LENGTH)
+    #text = forms.CharField(label=_('Comment'), widget=forms.Textarea, max_length=COMMENT_MAX_LENGTH)
+    text = forms.CharField(
+        widget=forms.Textarea,
+        max_length=COMMENT_MAX_LENGTH,
+        attrs={'tabindex': '1', 'placeholder': COMMENT_PLACEHOLDER}
+    )
 
     def get_comment_object(self):
         """

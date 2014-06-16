@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.3.0
+Added placeholder and minor formatting improvements.
+
 ### 0.2
 Attempting better post-comment redirecting
 

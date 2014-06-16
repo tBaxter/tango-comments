@@ -14,3 +14,5 @@ tango_comments.egg-info/SOURCES.txt
 tango_comments.egg-info/top_level.txt
 
 *.pyc
+
+dist/tango-comments-0.2.tar.gz
