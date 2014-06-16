@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.3.1
+Attrs fix.
+
 ### 0.3.0
 Added placeholder and minor formatting improvements.
 
