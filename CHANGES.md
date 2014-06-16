@@ -1,5 +1,11 @@
 # Tango Comments Change Log
 
+### 0.4.3
+More template recovery
+
+### 0.4.2
+Template recovery
+
 ### 0.4.1
 Moved templates in-app
 
