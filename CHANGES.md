@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.4.1
+Moved templates in-app
+
 ### 0.4.0
 Template cleanup
 
