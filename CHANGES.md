@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.4.4
+More direct redirect to next
+
 ### 0.4.3
 More template recovery
 

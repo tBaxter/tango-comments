@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.html import escape
@@ -15,7 +15,7 @@ from django.views.decorators.http import require_POST
 
 import tango_comments as comments
 from tango_comments import signals
-from tango_comments.views.utils import next_redirect, confirmation_view
+from tango_comments.views.utils import confirmation_view
 
 
 class CommentPostBadRequest(http.HttpResponseBadRequest):
@@ -128,9 +128,10 @@ def post_comment(request, next=None, using=None):
         request=request
     )
     messages.success(request, 'Your comment was saved.')
+    return redirect(next)
 
-    return next_redirect(request, fallback=next or 'comments-comment-done',
-        c=comment._get_pk_val())
+    #return next_redirect(request, fallback=next or 'comments-comment-done',
+    #    c=comment._get_pk_val())
 
 comment_done = confirmation_view(
     template="comments/posted.html",
