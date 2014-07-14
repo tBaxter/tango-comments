@@ -36,8 +36,7 @@ def post_comment(request, next=None, using=None):
     """
     Post a comment.
 
-    HTTP POST is required. If ``POST['submit'] == "preview"`` or if there are
-    errors a preview template, ``comments/preview.html``, will be rendered.
+    HTTP POST is required.
     """
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
@@ -70,9 +69,6 @@ def post_comment(request, next=None, using=None):
             "Attempting go get content-type %r and object PK %r exists raised %s" % \
                 (escape(ctype), escape(object_pk), e.__class__.__name__))
 
-    # Do we want to preview the comment?
-    preview = "preview" in data
-
     # Construct the comment form
     form = comments.get_form()(target, data=data)
 
@@ -86,12 +82,12 @@ def post_comment(request, next=None, using=None):
     if not next:
         next = request.get_full_path()
 
-    # If there are errors or if we requested a preview show the comment
-    if form.errors or preview:
+    # If there are errors show the comment
+    if form.errors:
         template_list = [
-            "comments/%s/%s/preview.html" % (model._meta.app_label, model._meta.module_name),
-            "comments/%s/preview.html" % model._meta.app_label,
-            "comments/preview.html",
+            "comments/%s/%s/form.html" % (model._meta.app_label, model._meta.module_name),
+            "comments/%s/form.html" % model._meta.app_label,
+            "comments/form.html",
         ]
         return render_to_response(
             template_list, {
