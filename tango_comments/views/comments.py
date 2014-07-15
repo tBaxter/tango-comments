@@ -80,7 +80,7 @@ def post_comment(request, next=None, using=None):
 
     # Check for next
     if not next:
-        next = request.get_full_path()
+        next = data.get("next")
 
     # If there are errors show the comment
     if form.errors:
@@ -124,6 +124,7 @@ def post_comment(request, next=None, using=None):
         request=request
     )
     messages.success(request, 'Your comment was saved.')
+    return HttpResponse(messages)
     return redirect(next)
 
     #return next_redirect(request, fallback=next or 'comments-comment-done',

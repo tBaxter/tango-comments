@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.5.1
+Resolve 'next' redirect
+
 ### 0.5.0
 Removed preview. Just show it.
 
