@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+### 0.5.2
+Removed stray response
+
 ### 0.5.1
 Resolve 'next' redirect
 

@@ -124,7 +124,6 @@ def post_comment(request, next=None, using=None):
         request=request
     )
     messages.success(request, 'Your comment was saved.')
-    return HttpResponse(messages)
     return redirect(next)
 
     #return next_redirect(request, fallback=next or 'comments-comment-done',
