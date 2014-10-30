@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+## 0.5.3
+Additional updates for Django 1.7
+
 ## 0.5.2
 Updates for Django 1.7
 
