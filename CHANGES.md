@@ -1,6 +1,9 @@
 # Tango Comments Change Log
 
 
+## 0.6.1
+Clarified class on form
+
 ## 0.6.0
 Added class on form for easier styling
 
