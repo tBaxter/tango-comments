@@ -1,5 +1,9 @@
 # Tango Comments Change Log
 
+
+## 0.6.0
+Added class on form for easier styling
+
 ## 0.5.3
 Additional updates for Django 1.7
 
