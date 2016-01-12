@@ -1,6 +1,6 @@
 {% load comments i18n %}
 
-<form action="{% comment_form_target %}" method="post" class="markitup-form">
+<form action="{% comment_form_target %}" method="post" class="markitup-form boxed-form">
   {% csrf_token %}
   {% for field in form %}
     {% if field.is_hidden %}

@@ -8,6 +8,7 @@ import tango_comments as comments
 
 register = template.Library()
 
+
 class BaseCommentNode(template.Node):
     """
     Base helper class (abstract) for handling the get_comment_* template tags.
@@ -20,15 +21,17 @@ class BaseCommentNode(template.Node):
         """Class method to parse get_comment_list/count/form and return a Node."""
         tokens = token.contents.split()
         if tokens[1] != 'for':
-            raise template.TemplateSyntaxError("Second argument in %r tag must be 'for'" % tokens[0])
+            raise template.TemplateSyntaxError(
+                "Second argument in %r tag must be 'for'" % tokens[0]
+            )
 
         # {% get_whatever for obj as varname %}
         if len(tokens) == 5:
             if tokens[3] != 'as':
                 raise template.TemplateSyntaxError("Third argument in %r must be 'as'" % tokens[0])
             return cls(
-                object_expr = parser.compile_filter(tokens[2]),
-                as_varname = tokens[4],
+                object_expr=parser.compile_filter(tokens[2]),
+                as_varname=tokens[4],
             )
 
         # {% get_whatever for app.model pk as varname %}
