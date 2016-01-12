@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core import urlresolvers
@@ -20,35 +20,38 @@ COMMENT_MAX_LENGTH = getattr(settings, 'COMMENT_MAX_LENGTH', 3000)
 class Comment(BaseUserContentModel):
     """
     A user comment about some object.
+
+    Unlike django.contrib.comments, we're not allowing unauthenticated users to comment
+    We've learned better. So, no user_email field, etc.
     """
 
-    # Unlike django.contrib.comments, we're not allowing unauthenticated users to comment
-    # because we've learned better. So, no user_email etc.
-    
     # Metadata about the comment
     ip_address = models.IPAddressField(_('IP address'), blank=True, null=True)
-    is_public = models.BooleanField(_('is public'), default=True,
-                    help_text=_('Uncheck this box to make the comment effectively ' \
-                                'disappear from the site.'))
-    is_removed = models.BooleanField(_('is removed'), default=False,
-                    help_text=_('Check this box if the comment is inappropriate. ' \
-                                'A "This comment has been removed" message will ' \
-                                'be displayed instead.'))
-
-    content_type = models.ForeignKey(ContentType,
-            verbose_name=_('content type'),
-            related_name="contenttype_set_for_%(class)s")
-    object_pk = models.TextField(_('object ID'))
-    content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_pk")
-
-    # Metadata about the comment
+    is_public = models.BooleanField(
+        _('is public'),
+        default=True,
+        help_text=_('Uncheck this box to make the comment effectively disappear from the site.')
+    )
+    is_removed = models.BooleanField(
+        _('is removed'),
+        default=False,
+        help_text=_("""Check this box if the comment is inappropriate.
+            A "This comment has been removed" message will be displayed instead.""")
+    )
     site = models.ForeignKey(Site, related_name='comment_site')
+    content_type = models.ForeignKey(
+        ContentType,
+        verbose_name=_('content type'),
+        related_name="contenttype_set_for_%(class)s"
+    )
+    object_pk = models.TextField(_('object ID'))
+    content_object = GenericForeignKey(ct_field="content_type", fk_field="object_pk")
 
-    # Manager
     objects = CommentManager()
 
     class Meta:
-        db_table = "django_comments"
+        app_label = 'tango_comments'
+        db_table = 'django_comments'
         ordering = ('post_date',)
         permissions = [("can_moderate", "Can moderate comments")]
         verbose_name = _('comment')
@@ -97,7 +100,11 @@ class CommentFlag(models.Model):
     design users are only allowed to flag a comment with a given flag once;
     if you want rating look elsewhere.
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'), related_name="comment_flag")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('user'),
+        related_name="comment_flag"
+    )
     comment = models.ForeignKey(Comment, verbose_name=_('comment'), related_name="flags")
     flag = models.CharField(_('flag'), max_length=30, db_index=True)
     flag_date = models.DateTimeField(_('date'), default=None)
@@ -108,6 +115,7 @@ class CommentFlag(models.Model):
     MODERATOR_APPROVAL = "moderator approval"
 
     class Meta:
+        app_label = 'tango_comments'
         db_table = 'django_comment_flags'
         unique_together = [('user', 'comment', 'flag')]
         verbose_name = _('comment flag')

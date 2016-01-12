@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+## 0.7.0
+Updates for Django 1.8
+
 ## 0.6.2
 Added another class on form
 

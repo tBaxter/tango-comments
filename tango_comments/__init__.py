@@ -1,92 +1,82 @@
+from importlib import import_module
+
 from django.conf import settings
 from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.importlib import import_module
 
 from .models import Comment
 from .forms import CommentForm
 
-DEFAULT_COMMENTS_APP = 'tango_comments'
+COMMENT_APP = 'tango_comments'
+
 
 def get_comment_app():
     """
     Get the comment app as defined in the settings
     """
     # Make sure the app's in INSTALLED_APPS
-    comments_app = get_comment_app_name()
-    if comments_app not in settings.INSTALLED_APPS:
-        raise ImproperlyConfigured("The COMMENTS_APP (%r) "\
-                                   "must be in INSTALLED_APPS" % settings.COMMENTS_APP)
+    if COMMENT_APP not in settings.INSTALLED_APPS:
+        raise ImproperlyConfigured("%s must be in INSTALLED_APPS" % COMMENT_APP)
 
     # Try to import the package
     try:
-        package = import_module(comments_app)
+        package = import_module(COMMENT_APP)
     except ImportError as e:
-        raise ImproperlyConfigured("The COMMENTS_APP setting refers to "\
-                                   "a non-existing package. (%s)" % e)
+        raise ImproperlyConfigured("% is not installed." % COMMENT_APP)
 
     return package
 
-def get_comment_app_name():
-    """
-    Returns the name of the comment app (either the setting value, if it
-    exists, or the default).
-    """
-    return getattr(settings, 'COMMENTS_APP', DEFAULT_COMMENTS_APP)
 
 def get_model():
     """
     Returns the comment model class.
     """
-    if get_comment_app_name() != DEFAULT_COMMENTS_APP and hasattr(get_comment_app(), "get_model"):
+    if hasattr(get_comment_app(), "get_model"):
         return get_comment_app().get_model()
     else:
         return Comment
+
 
 def get_form():
     """
     Returns the comment ModelForm class.
     """
-    if get_comment_app_name() != DEFAULT_COMMENTS_APP and hasattr(get_comment_app(), "get_form"):
+    if hasattr(get_comment_app(), "get_form"):
         return get_comment_app().get_form()
     else:
         return CommentForm
+
 
 def get_form_target():
     """
     Returns the target URL for the comment form submission view.
     """
-    if get_comment_app_name() != DEFAULT_COMMENTS_APP and hasattr(get_comment_app(), "get_form_target"):
+    if hasattr(get_comment_app(), "get_form_target"):
         return get_comment_app().get_form_target()
     else:
         return urlresolvers.reverse("tango_comments.views.comments.post_comment")
+
 
 def get_flag_url(comment):
     """
     Get the URL for the "flag this comment" view.
     """
-    if get_comment_app_name() != DEFAULT_COMMENTS_APP and hasattr(get_comment_app(), "get_flag_url"):
+    if hasattr(get_comment_app(), "get_flag_url"):
         return get_comment_app().get_flag_url(comment)
     else:
         return urlresolvers.reverse("tango_comments.views.moderation.flag",
                                     args=(comment.id,))
 
+
 def get_delete_url(comment):
     """
     Get the URL for the "delete this comment" view.
     """
-    if get_comment_app_name() != DEFAULT_COMMENTS_APP and hasattr(get_comment_app(), "get_delete_url"):
-        return get_comment_app().get_delete_url(comment)
-    else:
-        return urlresolvers.reverse("tango_comments.views.moderation.delete",
-                                    args=(comment.id,))
+    return urlresolvers.reverse("tango_comments.views.moderation.delete", args=(comment.id,))
+
 
 def get_approve_url(comment):
     """
     Get the URL for the "approve this comment from moderation" view.
     """
-    if get_comment_app_name() != DEFAULT_COMMENTS_APP and hasattr(get_comment_app(), "get_approve_url"):
-        return get_comment_app().get_approve_url(comment)
-    else:
-        return urlresolvers.reverse("tango_comments.views.moderation.approve",
-                                    args=(comment.id,))
+    return urlresolvers.reverse("tango_comments.views.moderation.approve", args=(comment.id,))
