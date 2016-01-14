@@ -4,7 +4,6 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _, ungettext
 
-from tango_comments import get_model
 from .models import Comment
 from .views.moderation import perform_flag, perform_approve, perform_delete
 
@@ -20,23 +19,15 @@ class UsernameSearch(object):
     def __str__(self):
         return 'user__%s' % get_user_model().USERNAME_FIELD
 
-    
-
 
 class CommentsAdmin(admin.ModelAdmin):
     readonly_fields = ("post_date",)
 
     fieldsets = (
-        (None,
-           {'fields': ('content_type', 'object_pk', 'site')}
-        ),
-        (_('Content'),
-           {'fields': ('user', 'text')}
-        ),
-        (_('Metadata'),
-           {'fields': ('post_date', 'ip_address', 'is_public', 'is_removed')}
-        ),
-     )
+        (None, {'fields': ('content_type', 'object_pk', 'site')}),
+        (_('Content'), {'fields': ('user', 'text')}),
+        (_('Metadata'), {'fields': ('post_date', 'ip_address', 'is_public', 'is_removed')}),
+    )
 
     list_display = ('user', 'content_type', 'object_pk', 'ip_address', 'post_date', 'is_public', 'is_removed')
     list_filter = ('post_date', 'site', 'is_public', 'is_removed')
@@ -88,7 +79,4 @@ class CommentsAdmin(admin.ModelAdmin):
                         n_comments)
         self.message_user(request, msg % {'count': n_comments, 'action': done_message(n_comments)})
 
-# Only register the default admin if the model is the built-in comment model
-# (this won't be true if there's a custom comment app).
-if get_model() is Comment:
-    admin.site.register(Comment, CommentsAdmin)
+admin.site.register(Comment, CommentsAdmin)

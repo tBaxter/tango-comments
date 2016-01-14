@@ -26,7 +26,7 @@ class Comment(BaseUserContentModel):
     """
 
     # Metadata about the comment
-    ip_address = models.IPAddressField(_('IP address'), blank=True, null=True)
+    ip_address = models.GenericIPAddressField(_('IP address'), blank=True, null=True)
     is_public = models.BooleanField(
         _('is public'),
         default=True,

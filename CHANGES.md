@@ -1,5 +1,11 @@
 # Tango Comments Change Log
 
+## 0.7.2
+Removed deprecated IPAddressField
+
+## 0.7.1
+Cleanup in admin
+
 ## 0.7.0
 Updates for Django 1.8
 
