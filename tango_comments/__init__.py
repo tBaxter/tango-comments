@@ -4,8 +4,8 @@ from django.conf import settings
 from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
 
-from .models import Comment
-from .forms import CommentForm
+from models import Comment
+from forms import CommentForm
 
 COMMENT_APP = 'tango_comments'
 
@@ -21,7 +21,7 @@ def get_comment_app():
     # Try to import the package
     try:
         package = import_module(COMMENT_APP)
-    except ImportError as e:
+    except ImportError:
         raise ImproperlyConfigured("% is not installed." % COMMENT_APP)
 
     return package
