@@ -4,8 +4,8 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _, ungettext
 
-from .models import Comment
-from .views.moderation import perform_flag, perform_approve, perform_delete
+from models import Comment
+from views.moderation import perform_flag, perform_approve, perform_delete
 
 
 from tango_admin.admin_actions import nuke_users
@@ -29,7 +29,15 @@ class CommentsAdmin(admin.ModelAdmin):
         (_('Metadata'), {'fields': ('post_date', 'ip_address', 'is_public', 'is_removed')}),
     )
 
-    list_display = ('user', 'content_type', 'object_pk', 'ip_address', 'post_date', 'is_public', 'is_removed')
+    list_display = (
+        'user',
+        'content_type',
+        'object_pk',
+        'ip_address',
+        'post_date',
+        'is_public',
+        'is_removed'
+    )
     list_filter = ('post_date', 'site', 'is_public', 'is_removed')
     date_hierarchy = 'post_date'
     ordering = ('-post_date',)

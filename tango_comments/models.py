@@ -50,7 +50,7 @@ class Comment(BaseUserContentModel):
     objects = CommentManager()
 
     class Meta:
-        #app_label = 'tango_comments'
+        app_label = 'tango_comments'
         db_table = 'django_comments'
         ordering = ('post_date',)
         permissions = [("can_moderate", "Can moderate comments")]
