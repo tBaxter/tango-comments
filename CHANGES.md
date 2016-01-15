@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+## 0.7.3
+Import simplification and cleanup
+
 ## 0.7.2
 Removed deprecated IPAddressField
 
