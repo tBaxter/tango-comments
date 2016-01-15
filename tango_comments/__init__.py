@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
 
-from forms import CommentForm
 
 COMMENT_APP = 'tango_comments'
 
@@ -37,10 +36,8 @@ def get_form():
     """
     Returns the comment ModelForm class.
     """
-    if hasattr(get_comment_app(), "get_form"):
-        return get_comment_app().get_form()
-    else:
-        return CommentForm
+    from forms import CommentForm
+    return CommentForm
 
 
 def get_form_target():
