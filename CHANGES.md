@@ -1,5 +1,8 @@
 # Tango Comments Change Log
 
+## 0.7.4
+Removed outdated reference to urlresolvers
+
 ## 0.7.3
 Import simplification and cleanup
 
