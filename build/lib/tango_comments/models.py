@@ -2,11 +2,10 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-from django.core import urlresolvers
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 
 from tango_shared.models import BaseUserContentModel
 
@@ -16,7 +15,6 @@ from .managers import CommentManager
 COMMENT_MAX_LENGTH = getattr(settings, 'COMMENT_MAX_LENGTH', 3000)
 
 
-@python_2_unicode_compatible
 class Comment(BaseUserContentModel):
     """
     A user comment about some object.
@@ -38,9 +36,14 @@ class Comment(BaseUserContentModel):
         help_text=_("""Check this box if the comment is inappropriate.
             A "This comment has been removed" message will be displayed instead.""")
     )
-    site = models.ForeignKey(Site, related_name='comment_site')
+    site = models.ForeignKey(
+        Site,
+        on_delete=models.PROTECT,
+        related_name='comment_site'
+    )
     content_type = models.ForeignKey(
         ContentType,
+        on_delete=models.PROTECT,
         verbose_name=_('content type'),
         related_name="contenttype_set_for_%(class)s"
     )
@@ -64,7 +67,7 @@ class Comment(BaseUserContentModel):
         """
         Get a URL suitable for redirecting to the content object.
         """
-        return urlresolvers.reverse(
+        return reverse(
             "comments-url-redirect",
             args=(self.content_type_id, self.object_pk)
         )
@@ -86,7 +89,6 @@ class Comment(BaseUserContentModel):
         return _('Posted by %(user)s at %(date)s\n\n%(comment)s\n\nhttp://%(domain)s%(url)s') % d
 
 
-@python_2_unicode_compatible
 class CommentFlag(models.Model):
     """
     Records a flag on a comment. This is intentionally flexible; right now, a
@@ -102,10 +104,16 @@ class CommentFlag(models.Model):
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
         verbose_name=_('user'),
         related_name="comment_flag"
     )
-    comment = models.ForeignKey(Comment, verbose_name=_('comment'), related_name="flags")
+    comment = models.ForeignKey(
+        Comment,
+        on_delete=models.CASCADE,
+        verbose_name=_('comment'),
+        related_name="flags"
+    )
     flag = models.CharField(_('flag'), max_length=30, db_index=True)
     flag_date = models.DateTimeField(_('date'), default=None)
 
