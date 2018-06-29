@@ -1,7 +1,7 @@
 # Tango Comments Change Log
 
-## 0.7.6
-Updated to use on_delete argument for Django 2.0 compatibility.
+## 0.8.0
+Updated for Django 2.0 compatibility
 
 ## 0.7.5
 Removed more references to urlresolvers
