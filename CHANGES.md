@@ -1,6 +1,9 @@
 # Tango Comments Change Log
 
 ## 0.8.0
+Updated is_authenticated check
+
+## 0.8.0
 Updated for Django 2.0 compatibility
 
 ## 0.7.5

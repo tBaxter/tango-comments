@@ -1,6 +1,4 @@
-from __future__ import absolute_import
-
-from django.conf.urls import patterns, url
+from django.urls import path, re_path
 
 from django_comments.feeds import LatestCommentFeed
 
@@ -11,14 +9,11 @@ feeds = {
      'comments': LatestCommentFeed,
 }
 
-urlpatterns = patterns('',
-    url(r'^post/$', views.custom_submit_comment),
-    url(r'^flag/(\d+)/$', views.custom_flag_comment),
-    url(r'^delete/(\d+)/$', views.custom_delete_comment),
-    url(r'^approve/(\d+)/$', views.custom_approve_comment),
-    url(r'^cr/(\d+)/(.+)/$', 'django.contrib.contenttypes.views.shortcut', name='comments-url-redirect'),
-)
-
-urlpatterns += patterns('',
-    (r'^rss/comments/$', LatestCommentFeed()),
-)
+urlpatterns = [
+    path('post/', views.custom_submit_comment),
+    re_path(r'^flag/(\d+)/$', views.custom_flag_comment),
+    re_path(r'^delete/(\d+)/$', views.custom_delete_comment),
+    re_path(r'^approve/(\d+)/$', views.custom_approve_comment),
+    re_path(r'^cr/(\d+)/(.+)/$', 'django.contrib.contenttypes.views.shortcut', name='comments-url-redirect'),
+    path('rss/comments/', LatestCommentFeed),
+]
