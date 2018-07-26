@@ -1,12 +1,9 @@
-from __future__ import unicode_literals
-
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _, ungettext
 
-from models import Comment
-from views.moderation import perform_flag, perform_approve, perform_delete
-
+from .models import Comment
+from .views.moderation import perform_flag, perform_approve, perform_delete
 
 from tango_admin.admin_actions import nuke_users
 

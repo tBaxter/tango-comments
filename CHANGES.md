@@ -1,5 +1,11 @@
 # Tango Comments Change Log
 
+## 0.9.0
+Corrected defects around Django 2.0 updae
+
+## 0.8.1
+Updated imports
+
 ## 0.8.0
 Updated is_authenticated check
 
