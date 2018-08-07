@@ -10,7 +10,7 @@ def get_model():
     """
     Returns the comment model class.
     """
-    return AppConfig.get_model('Comment')
+    return AppConfig.get_model(model_name='Comment')
 
 
 def get_form():
