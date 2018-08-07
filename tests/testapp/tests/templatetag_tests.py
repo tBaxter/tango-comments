@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from django.contrib.contenttypes.models import ContentType
-from django.template import Template, Context, Library, libraries
+from django.template import Template, Context, Library
 
 from tango_comments.forms import CommentForm
 from tango_comments.models import Comment
@@ -15,7 +15,7 @@ register = Library()
 def noop(variable, param=None):
     return variable
 
-libraries['comment_testtags'] = register
+#libraries['comment_testtags'] = register
 
 
 class CommentTemplateTagTests(CommentTestCase):
