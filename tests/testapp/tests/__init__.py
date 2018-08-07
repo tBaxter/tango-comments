@@ -9,7 +9,7 @@ from django.test.utils import override_settings
 from tango_comments.forms import CommentForm
 from tango_comments.models import Comment
 
-from testapp.models import Article, Author
+from tests.testapp.models import Article, Author
 
 # Shortcut
 CT = ContentType.objects.get_for_model
