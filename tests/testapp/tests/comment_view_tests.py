@@ -5,11 +5,11 @@ import re
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from django_comments import signals
-from django_comments.models import Comment
+from tango_comments import signals
+from tango_comments.models import Comment
 
 from . import CommentTestCase
-from ..models import Article, Book
+from tests.testapp.models import Article, Book
 
 
 post_redirect_re = re.compile(r'^http://testserver/posted/\?c=(?P<pk>\d+$)')

@@ -3,10 +3,10 @@ from __future__ import absolute_import
 from django.contrib.contenttypes.models import ContentType
 from django.template import Template, Context, Library, libraries
 
-from django_comments.forms import CommentForm
-from django_comments.models import Comment
+from tango_comments.forms import CommentForm
+from tango_comments.models import Comment
 
-from ..models import Article, Author
+from tests.testapp.models import Article, Author
 from . import CommentTestCase
 
 register = Library()

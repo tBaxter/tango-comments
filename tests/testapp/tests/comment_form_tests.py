@@ -4,11 +4,11 @@ import time
 
 from django.conf import settings
 
-from django_comments.forms import CommentForm
-from django_comments.models import Comment
+from tango_comments.forms import CommentForm
+from tango_comments.models import Comment
 
 from . import CommentTestCase
-from ..models import Article
+from tests.testapp.models import Article
 
 
 class CommentFormTests(CommentTestCase):

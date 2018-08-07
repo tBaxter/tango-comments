@@ -4,8 +4,8 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.utils import translation
 
-from django_comments import signals
-from django_comments.models import Comment, CommentFlag
+from tango_comments import signals
+from tango_comments.models import Comment, CommentFlag
 
 from . import CommentTestCase
 

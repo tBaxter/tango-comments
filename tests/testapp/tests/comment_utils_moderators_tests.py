@@ -3,12 +3,12 @@ from __future__ import absolute_import
 from django.core import mail
 from django.test.utils import override_settings
 
-from django_comments.models import Comment
-from django_comments.moderation import (moderator, CommentModerator,
+from tango_comments.models import Comment
+from tango_comments.moderation import (moderator, CommentModerator,
     AlreadyModerated)
 
 from . import CommentTestCase
-from ..models import Entry
+from tests.testapp.models import Entry
 
 
 class EntryModerator1(CommentModerator):
