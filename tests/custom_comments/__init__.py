@@ -1,12 +1,18 @@
 from django.urls import reverse
-from .models import CustomComment
-from .forms import CustomCommentForm
+
+def get_custom_model():
+    from .models import CustomComment
+    return CustomComment
+    
+def get_custom_form():
+    from .forms import CustomCommentForm
+    return CustomCommentForm
 
 def get_model():
-    return CustomComment
+    return get_custom_model()
 
 def get_form():
-    return CustomCommentForm
+    return get_custom_form()
 
 def get_form_target():
     return reverse(
