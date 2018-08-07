@@ -10,7 +10,7 @@ def get_model():
     """
     Returns the comment model class.
     """
-    return AppConfig.get_model('tango_comments.Comment')
+    return AppConfig.get_model('Comment')
 
 
 def get_form():
