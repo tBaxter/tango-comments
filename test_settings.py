@@ -8,7 +8,7 @@ INSTALLED_APPS = (
     'tango_shared',
     'easy_thumbnails',
     'tango_comments',
-    'tango_comments.tests.custom_comments'
+    'tests.custom_comments'
 )
 
 DATABASES = {
