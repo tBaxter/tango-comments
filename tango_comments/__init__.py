@@ -50,20 +50,14 @@ def get_form_target():
     """
     Returns the target URL for the comment form submission view.
     """
-    if hasattr(get_comment_app(), "get_form_target"):
-        return get_comment_app().get_form_target()
-    else:
-        return reverse("tango_comments.views.comments.post_comment")
+    return reverse("tango_comments.views.comments.post_comment")
 
 
 def get_flag_url(comment):
     """
     Get the URL for the "flag this comment" view.
     """
-    if hasattr(get_comment_app(), "get_flag_url"):
-        return get_comment_app().get_flag_url(comment)
-    else:
-        return reverse("tango_comments.views.moderation.flag", args=(comment.id,))
+    return reverse("tango_comments.views.moderation.flag", args=(comment.id,))
 
 
 def get_delete_url(comment):

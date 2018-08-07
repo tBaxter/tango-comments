@@ -15,16 +15,6 @@ from . import CommentTestCase
 class CommentAppAPITests(CommentTestCase):
     """Tests for the "comment app" API"""
 
-    def testGetCommentApp(self):
-        self.assertEqual(tango_comments.get_comment_app(), tango_comments)
-
-    @override_settings(
-        COMMENTS_APP='missing_app',
-        INSTALLED_APPS=list(settings.INSTALLED_APPS) + ['missing_app'],
-    )
-    def testGetMissingCommentApp(self):
-        with six.assertRaisesRegex(self, ImproperlyConfigured, 'missing_app'):
-            _ = tango_comments.get_comment_app()
 
     def testGetForm(self):
         self.assertEqual(tango_comments.get_form(), CommentForm)
@@ -52,10 +42,6 @@ class CommentAppAPITests(CommentTestCase):
 )
 class CustomCommentTest(CommentTestCase):
     urls = 'testapp.urls'
-
-    def testGetCommentApp(self):
-        import custom_comments
-        self.assertEqual(tango_comments.get_comment_app(), custom_comments)
 
     def testGetModel(self):
         from custom_comments.models import CustomComment
