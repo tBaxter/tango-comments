@@ -39,7 +39,6 @@ class CommentTestCase(TestCase):
             content_type = CT(Article),
             object_pk = "1",
             user = user,
-            user_url = "http://example.com/~frank/",
             text = "Damn, I wanted to be first.",
             site = Site.objects.get_current(),
         )
@@ -47,7 +46,6 @@ class CommentTestCase(TestCase):
             content_type = CT(Author),
             object_pk = "2",
             user = user,
-            user_url = "http://example.com/~frank/",
             text = "You get here first, too?",
             site = Site.objects.get_current(),
         )
