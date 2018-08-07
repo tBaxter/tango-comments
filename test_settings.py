@@ -26,9 +26,9 @@ ROOT_URLCONF = 'tango_comments.urls'
 AUTH_USER_MODEL = 'auth.User'
 
 #stripped down middleware
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-)
+]
