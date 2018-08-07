@@ -5,6 +5,8 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
 
+    'tango-shared-core',
+    'easy-thumbnails',
     'tango_comments',
 )
 
