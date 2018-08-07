@@ -19,7 +19,7 @@ def get_comment_app():
     Get the comment app as defined in the settings
     """
     # Make sure the app's in INSTALLED_APPS
-    if COMMENT_APP not in current_settings.INSTALLED_APPS:
+    if COMMENT_APP not in current_settings().INSTALLED_APPS:
         raise ImproperlyConfigured("%s must be in INSTALLED_APPS" % COMMENT_APP)
 
     # Try to import the package
