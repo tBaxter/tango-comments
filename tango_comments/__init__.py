@@ -1,6 +1,6 @@
 from importlib import import_module
 
-from django.apps.AppConfig import get_model as app_config_get_model
+from django.apps import AppConfig
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
@@ -10,7 +10,7 @@ def get_model():
     """
     Returns the comment model class.
     """
-    return app_config_get_model('tango_comments.Comment')
+    return AppConfig.get_model('tango_comments.Comment')
 
 
 def get_form():
