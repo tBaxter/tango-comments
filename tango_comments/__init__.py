@@ -7,13 +7,19 @@ from django.urls import reverse
 
 COMMENT_APP = 'tango_comments'
 
+def current_settings():
+    """
+    Because this is in __init__ be sure we're getting the right settings at runtime
+    """
+    from django.conf import settings
+    return settings
 
 def get_comment_app():
     """
     Get the comment app as defined in the settings
     """
     # Make sure the app's in INSTALLED_APPS
-    if COMMENT_APP not in settings.INSTALLED_APPS:
+    if COMMENT_APP not in current_settings.INSTALLED_APPS:
         raise ImproperlyConfigured("%s must be in INSTALLED_APPS" % COMMENT_APP)
 
     # Try to import the package
