@@ -40,7 +40,7 @@ class CommentTestCase(TestCase):
             object_pk = "1",
             user = user,
             user_url = "http://example.com/~frank/",
-            comment = "Damn, I wanted to be first.",
+            text = "Damn, I wanted to be first.",
             site = Site.objects.get_current(),
         )
         c4 = Comment.objects.create(
@@ -48,7 +48,7 @@ class CommentTestCase(TestCase):
             object_pk = "2",
             user = user,
             user_url = "http://example.com/~frank/",
-            comment = "You get here first, too?",
+            text = "You get here first, too?",
             site = Site.objects.get_current(),
         )
 
@@ -59,7 +59,7 @@ class CommentTestCase(TestCase):
             'name'      : 'Jim Bob',
             'email'     : 'jim.bob@example.com',
             'url'       : '',
-            'comment'   : 'This is my comment',
+            'text'      : 'This is my comment',
         }
 
     def getValidData(self, obj):
