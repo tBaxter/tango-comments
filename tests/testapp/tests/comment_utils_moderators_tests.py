@@ -84,17 +84,3 @@ class CommentUtilsModeratorTests(CommentTestCase):
         self.createSomeComments()
         self.assertEqual(Comment.objects.all().count(), 0)
 
-    def testAutoModerateField(self):
-        moderator.register(Entry, EntryModerator4)
-        c1, c2 = self.createSomeComments()
-        self.assertEqual(c2.is_public, False)
-
-    def testAutoModerateFieldImmediate(self):
-        moderator.register(Entry, EntryModerator5)
-        c1, c2 = self.createSomeComments()
-        self.assertEqual(c2.is_public, False)
-
-    def testAutoCloseFieldImmediate(self):
-        moderator.register(Entry, EntryModerator6)
-        c1, c2 = self.createSomeComments()
-        self.assertEqual(Comment.objects.all().count(), 0)

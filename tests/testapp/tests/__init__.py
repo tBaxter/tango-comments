@@ -21,28 +21,6 @@ class CommentTestCase(TestCase):
     urls = 'testapp.urls_default'
 
     def createSomeComments(self):
-        # Two anonymous comments on two different objects
-        c1 = Comment.objects.create(
-            content_type = CT(Article),
-            object_pk = "1",
-            user_name = "Joe Somebody",
-            user_email = "jsomebody@example.com",
-            user_url = "http://example.com/~joe/",
-            comment = "First!",
-            site = Site.objects.get_current(),
-        )
-        c2 = Comment.objects.create(
-            content_type = CT(Author),
-            object_pk = "1",
-            user_name = "Joe Somebody",
-            user_email = "jsomebody@example.com",
-            user_url = "http://example.com/~joe/",
-            comment = "First here, too!",
-            site = Site.objects.get_current(),
-        )
-
-        # Two authenticated comments: one on the same Article, and
-        # one on a different Author
         user = User.objects.create(
             username = "frank_nobody",
             first_name = "Frank",
@@ -53,6 +31,10 @@ class CommentTestCase(TestCase):
             is_active = True,
             is_superuser = False,
         )
+
+        # Two authenticated comments: one on the same Article, and
+        # one on a different Author
+        
         c3 = Comment.objects.create(
             content_type = CT(Article),
             object_pk = "1",
@@ -70,7 +52,7 @@ class CommentTestCase(TestCase):
             site = Site.objects.get_current(),
         )
 
-        return c1, c2, c3, c4
+        return c3, c4
 
     def getData(self):
         return {
