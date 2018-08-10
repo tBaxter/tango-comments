@@ -19,9 +19,8 @@ CT = ContentType.objects.get_for_model
 class CommentTestCase(TestCase):
     fixtures = ["comment_tests"]
     urls = 'testapp.urls_default'
-
-    def createSomeComments(self):
-        user = User.objects.create(
+    
+    user = User.objects.create(
             username = "frank_nobody",
             first_name = "Frank",
             last_name = "Nobody",
@@ -31,6 +30,9 @@ class CommentTestCase(TestCase):
             is_active = True,
             is_superuser = False,
         )
+
+    def createSomeComments(self):
+        user = self.user
 
         # Two authenticated comments: one on the same Article, and
         # one on a different Author
@@ -58,7 +60,7 @@ class CommentTestCase(TestCase):
         return {
             'name'      : 'Jim Bob',
             'email'     : 'jim.bob@example.com',
-            'user_id'   : user.id
+            'user_id'   : self.user.id,
             'url'       : '',
             'text'      : 'This is my comment',
         }
