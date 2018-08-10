@@ -44,7 +44,7 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def testRenderCommentForm(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_form for testapp.article a.id %}")
-        out = self.render(t, a=Article.objects.get(pk=1))[1]
+        out = Template(t).render(Context({'a': Article.objects.get(pk=1)}))
         self.assertTrue(out.strip().startswith("<form action="))
         self.assertTrue(out.strip().endswith("</form>"))
 
@@ -104,15 +104,6 @@ class CommentTemplateTagTests(CommentTestCase):
     def testWhitespaceInGetCommentListTag(self):
         self.createSomeComments()
         self.verifyGetCommentList("{% load comment_testtags %}{% get_comment_list for a|noop:'x y' as cl %}")
-
-    def testGetCommentPermalink(self):
-        c3 = self.createSomeComments()[0]
-        t = "{% load comments %}{% get_comment_list for testapp.author author.id as cl %}"
-        t += "{% get_comment_permalink cl.0 %}"
-        ct = ContentType.objects.get_for_model(Author)
-        author = Author.objects.get(pk=1)
-        out = self.render(t, author=author)[1]
-        self.assertEqual(out, "/cr/%s/%s/#c%s" % (ct.id, author.id, c3.id))
 
     def testRenderCommentList(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_list for testapp.article a.id %}")
