@@ -1,3 +1,5 @@
+from random import randint
+
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -23,7 +25,7 @@ class CommentTestCase(TestCase):
     def get_user(self):
         user_model = get_user_model()
         user = user_model.objects.create(
-            username = "frank_nobody",
+            username = "frank_nobody_" + randint(0, 100),
             first_name = "Frank",
             last_name = "Nobody",
             email = "fnobody@example.com",
