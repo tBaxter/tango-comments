@@ -197,12 +197,6 @@ class ApproveViewTests(CommentTestCase):
         received_signals = []
         signals.comment_was_flagged.connect(receive)
 
-        # Post a comment and check the signals
-        self.testApprovePost()
-        self.assertEqual(received_signals, [signals.comment_was_flagged])
-
-        signals.comment_was_flagged.disconnect(receive)
-
     def testApprovedView(self):
         comments = self.createSomeComments()
         pk = comments[0].pk

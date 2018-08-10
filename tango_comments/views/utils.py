@@ -9,7 +9,7 @@ except ImportError:     # Python 2
     from urllib import urlencode
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response, resolve_url
+from django.shortcuts import render, resolve_url
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import is_safe_url
@@ -54,10 +54,7 @@ def confirmation_view(template, doc="Display a confirmation view."):
                 comment = comments.get_model().objects.get(pk=request.GET['c'])
             except (ObjectDoesNotExist, ValueError):
                 pass
-        return render_to_response(template,
-            {'comment': comment},
-            context_instance=RequestContext(request)
-        )
+        return render(request, template, {'comment': comment})
 
     confirmed.__doc__ = textwrap.dedent("""\
         %s

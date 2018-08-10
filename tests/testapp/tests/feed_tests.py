@@ -25,8 +25,7 @@ class CommentFeedTests(CommentTestCase):
             object_pk = "1",
             user_name = "Joe Somebody",
             user_email = "jsomebody@example.com",
-            user_url = "http://example.com/~joe/",
-            comment = "A comment for the second site.",
+            text = "A comment for the second site.",
             site = site_2,
         )
 

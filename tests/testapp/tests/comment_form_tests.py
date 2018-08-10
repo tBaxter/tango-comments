@@ -57,7 +57,7 @@ class CommentFormTests(CommentTestCase):
         c = f.get_comment_object()
         self.assertTrue(isinstance(c, Comment))
         self.assertEqual(c.content_object, Article.objects.get(pk=1))
-        self.assertEqual(c.comment, "This is my comment")
+        self.assertEqual(c.text, "This is my comment")
         c.save()
         self.assertEqual(Comment.objects.count(), 1)
 
