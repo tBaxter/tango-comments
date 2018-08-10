@@ -3,14 +3,10 @@ A few bits of helper functions for comment views.
 """
 
 import textwrap
-try:
-    from urllib.parse import urlencode
-except ImportError:     # Python 2
-    from urllib import urlencode
+from urllib.parse import urlencode
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
-from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import is_safe_url
 

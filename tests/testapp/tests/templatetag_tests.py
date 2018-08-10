@@ -15,8 +15,6 @@ register = Library()
 def noop(variable, param=None):
     return variable
 
-#libraries['comment_testtags'] = register
-
 
 class CommentTemplateTagTests(CommentTestCase):
 
@@ -26,8 +24,8 @@ class CommentTemplateTagTests(CommentTestCase):
         return ctx, out
 
     def testCommentFormTarget(self):
-        ctx, out = self.render("{% load comments %}{% comment_form_target %}")
-        self.assertEqual(out, "/post/")
+        out = self.render("{% load comments %}{% comment_form_target %}")
+        self.assertEqual(out[1], "/post/")
 
     def testGetCommentForm(self, tag=None):
         t = "{% load comments %}" + (tag or "{% get_comment_form for testapp.article a.id as form %}")
@@ -46,7 +44,7 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def testRenderCommentForm(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_form for testapp.article a.id %}")
-        ctx, out = self.render(t, a=Article.objects.get(pk=1))
+        out = self.render(t, a=Article.objects.get(pk=1))[1]
         self.assertTrue(out.strip().startswith("<form action="))
         self.assertTrue(out.strip().endswith("</form>"))
 
@@ -65,8 +63,8 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def verifyGetCommentCount(self, tag=None):
         t = "{% load comments %}" + (tag or "{% get_comment_count for testapp.article a.id as cc %}") + "{{ cc }}"
-        ctx, out = self.render(t, a=Article.objects.get(pk=1))
-        self.assertEqual(out, "2")
+        out = self.render(t, a=Article.objects.get(pk=1))
+        self.assertEqual(out[1], "2")
 
     def testGetCommentCount(self):
         self.createSomeComments()
@@ -85,7 +83,7 @@ class CommentTemplateTagTests(CommentTestCase):
         self.verifyGetCommentCount("{% load comment_testtags %}{% get_comment_count for a|noop:'x y' as cc %}")
 
     def verifyGetCommentList(self, tag=None):
-        c1, c2, c3, c4 = Comment.objects.all()[:4]
+        c2 = Comment.objects.all()[1]
         t = "{% load comments %}" +  (tag or "{% get_comment_list for testapp.author a.id as cl %}")
         ctx, out = self.render(t, a=Author.objects.get(pk=1))
         self.assertEqual(out, "")
@@ -108,35 +106,35 @@ class CommentTemplateTagTests(CommentTestCase):
         self.verifyGetCommentList("{% load comment_testtags %}{% get_comment_list for a|noop:'x y' as cl %}")
 
     def testGetCommentPermalink(self):
-        c3, c4 = self.createSomeComments()
+        c3 = self.createSomeComments()[0]
         t = "{% load comments %}{% get_comment_list for testapp.author author.id as cl %}"
         t += "{% get_comment_permalink cl.0 %}"
         ct = ContentType.objects.get_for_model(Author)
         author = Author.objects.get(pk=1)
-        ctx, out = self.render(t, author=author)
+        out = self.render(t, author=author)[1]
         self.assertEqual(out, "/cr/%s/%s/#c%s" % (ct.id, author.id, c3.id))
 
     def testGetCommentPermalinkFormatted(self):
-        c3, c4 = self.createSomeComments()
+        c3  = self.createSomeComments()[0]
         t = "{% load comments %}{% get_comment_list for testapp.author author.id as cl %}"
         t += "{% get_comment_permalink cl.0 '#c%(id)s-by-%(user_name)s' %}"
         ct = ContentType.objects.get_for_model(Author)
         author = Author.objects.get(pk=1)
-        ctx, out = self.render(t, author=author)
+        out = self.render(t, author=author)[1]
         self.assertEqual(out, "/cr/%s/%s/#c%s-by-Joe Somebody" % (ct.id, author.id, c3.id))
 
     def testWhitespaceInGetCommentPermalinkTag(self):
-        c3, c4 = self.createSomeComments()
+        c3 = self.createSomeComments()[0]
         t = "{% load comments comment_testtags %}{% get_comment_list for testapp.author author.id as cl %}"
         t += "{% get_comment_permalink cl.0|noop:'x y' %}"
         ct = ContentType.objects.get_for_model(Author)
         author = Author.objects.get(pk=1)
-        ctx, out = self.render(t, author=author)
+        out = self.render(t, author=author)[1]
         self.assertEqual(out, "/cr/%s/%s/#c%s" % (ct.id, author.id, c3.id))
 
     def testRenderCommentList(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_list for testapp.article a.id %}")
-        ctx, out = self.render(t, a=Article.objects.get(pk=1))
+        out = self.render(t, a=Article.objects.get(pk=1))[1]
         self.assertTrue(out.strip().startswith("<dl id=\"comments\">"))
         self.assertTrue(out.strip().endswith("</dl>"))
 

@@ -1,9 +1,6 @@
-from __future__ import absolute_import
-
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.test.utils import override_settings
-from django.utils import six
 
 import tango_comments
 from tango_comments.models import Comment
@@ -14,7 +11,6 @@ from . import CommentTestCase
 
 class CommentAppAPITests(CommentTestCase):
     """Tests for the "comment app" API"""
-
 
     def testGetForm(self):
         self.assertEqual(tango_comments.get_form(), CommentForm)

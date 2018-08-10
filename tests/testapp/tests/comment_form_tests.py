@@ -3,17 +3,18 @@ from __future__ import absolute_import
 import time
 
 from django.conf import settings
-
+from django.contrib.auth import get_user_model
 from tango_comments.forms import CommentForm
 from tango_comments.models import Comment
 
 from . import CommentTestCase
 from tests.testapp.models import Article
 
+user_model = get_user_model()
 
 class CommentFormTests(CommentTestCase):
     def setup(self):
-        user = User.objects.create(
+        user = user_model.objects.create(
             username = "frank_nobody",
             first_name = "Frank",
             last_name = "Nobody",
