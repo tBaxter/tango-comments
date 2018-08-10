@@ -213,7 +213,7 @@ class AdminActionsTests(CommentTestCase):
         u = User.objects.get(username="normaluser")
         u.is_staff = True
         perms = Permission.objects.filter(
-            content_type__app_label = 'django_comments',
+            content_type__app_label = 'tango_comments',
             codename__endswith = 'comment'
         )
         for perm in perms:
@@ -223,33 +223,20 @@ class AdminActionsTests(CommentTestCase):
     def testActionsNonModerator(self):
         comments = self.createSomeComments()
         self.client.login(username="normaluser", password="normaluser")
-        response = self.client.get("/admin/django_comments/comment/")
+        response = self.client.get("/admin/tango_comments/comment/")
         self.assertNotContains(response, "approve_comments")
 
     def testActionsModerator(self):
         comments = self.createSomeComments()
         makeModerator("normaluser")
         self.client.login(username="normaluser", password="normaluser")
-        response = self.client.get("/admin/django_comments/comment/")
+        response = self.client.get("/admin/tango_comments/comment/")
         self.assertContains(response, "approve_comments")
 
     def testActionsDisabledDelete(self):
         "Tests a CommentAdmin where 'delete_selected' has been disabled."
         comments = self.createSomeComments()
         self.client.login(username="normaluser", password="normaluser")
-        response = self.client.get('/admin2/django_comments/comment/')
+        response = self.client.get('/admin2/tango_comments/comment/')
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, '<option value="delete_selected">')
-
-    def testActionsMessageTranslations(self):
-        c3, c4 = self.createSomeComments()
-        many_comments = [c3.pk, c4.pk]
-        makeModerator("normaluser")
-        self.client.login(username="normaluser", password="normaluser")
-        with translation.override('en'):
-            #Test approving
-            self.performActionAndCheckMessage('approve_comments', many_comments, '2 comments were successfully approved.')
-            #Test flagging
-            self.performActionAndCheckMessage('flag_comments', many_comments, '2 comments were successfully flagged.')
-            #Test removing
-            self.performActionAndCheckMessage('remove_comments', many_comments, '2 comments were successfully removed.')

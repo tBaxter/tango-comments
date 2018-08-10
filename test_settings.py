@@ -42,3 +42,6 @@ TEMPLATES = [
         'APP_DIRS': True,
     },
 ]
+
+# TO-DO: Pull from tango_shared
+PROFANITIES_LIST = []

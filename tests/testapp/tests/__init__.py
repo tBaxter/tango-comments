@@ -39,6 +39,7 @@ class CommentTestCase(TestCase):
             content_type = CT(Article),
             object_pk = "1",
             user = user,
+            user_id = user.id,
             text = "Damn, I wanted to be first.",
             site = Site.objects.get_current(),
         )
@@ -46,6 +47,7 @@ class CommentTestCase(TestCase):
             content_type = CT(Author),
             object_pk = "2",
             user = user,
+            user_id = user.id,
             text = "You get here first, too?",
             site = Site.objects.get_current(),
         )
@@ -56,6 +58,7 @@ class CommentTestCase(TestCase):
         return {
             'name'      : 'Jim Bob',
             'email'     : 'jim.bob@example.com',
+            'user_id'   : user.id
             'url'       : '',
             'text'      : 'This is my comment',
         }

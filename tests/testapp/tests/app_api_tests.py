@@ -49,7 +49,7 @@ class CustomCommentTest(CommentTestCase):
 
     def testGetForm(self):
         from custom_comments.forms import CustomCommentForm
-        self.assertEqual(django_comments.get_form(), CustomCommentForm)
+        self.assertEqual(tango_comments.get_form(), CustomCommentForm)
 
     def testGetFormTarget(self):
         self.assertEqual(tango_comments.get_form_target(), "/post/")
