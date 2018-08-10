@@ -63,6 +63,7 @@ class CommentTestCase(TestCase):
         return {
             'name'      : 'Jim Bob',
             'email'     : 'jim.bob@example.com',
+            'user'      : self.get_user(),
             'user_id'   : self.get_user().id,
             'url'       : '',
             'text'      : 'This is my comment',
