@@ -25,7 +25,7 @@ class CommentTestCase(TestCase):
     def get_user(self):
         user_model = get_user_model()
         user = user_model.objects.create(
-            username = "frank_nobody_" + randint(0, 100),
+            username = "frank_nobody_" + str(randint(0, 100)),
             first_name = "Frank",
             last_name = "Nobody",
             email = "fnobody@example.com",
