@@ -45,3 +45,4 @@ TEMPLATES = [
 
 # TO-DO: Pull from tango_shared
 PROFANITIES_LIST = []
+COMMENTS_ALLOW_PROFANITIES = True
