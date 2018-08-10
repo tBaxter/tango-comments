@@ -11,7 +11,7 @@ from tests.testapp.models import Article, Author
 
 # Shortcut
 CT = ContentType.objects.get_for_model
-user_model = get_user_model()
+
 
 # Helper base class for comment tests that need data.
 @override_settings(PASSWORD_HASHERS=('django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',))
@@ -19,7 +19,10 @@ class CommentTestCase(TestCase):
     fixtures = ["comment_tests"]
     urls = 'testapp.urls_default'
 
-    user = user_model.objects.create(
+    
+    def get_user(self):
+        user_model = get_user_model()
+        user = user_model.objects.create(
             username = "frank_nobody",
             first_name = "Frank",
             last_name = "Nobody",
@@ -29,9 +32,10 @@ class CommentTestCase(TestCase):
             is_active = True,
             is_superuser = False,
         )
+        return user
 
     def createSomeComments(self):
-        user = self.user
+        user = self.get_user()
 
         # Two authenticated comments: one on the same Article, and
         # one on a different Author
@@ -59,7 +63,7 @@ class CommentTestCase(TestCase):
         return {
             'name'      : 'Jim Bob',
             'email'     : 'jim.bob@example.com',
-            'user_id'   : self.user.id,
+            'user_id'   : self.get_user().id,
             'url'       : '',
             'text'      : 'This is my comment',
         }
