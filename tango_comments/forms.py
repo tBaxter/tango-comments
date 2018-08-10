@@ -142,6 +142,7 @@ class CommentDetailsForm(CommentSecurityForm):
             content_type=ContentType.objects.get_for_model(self.target_object),
             object_pk=force_text(self.target_object._get_pk_val()),
             text=self.cleaned_data["text"],
+            user=self.user,
             post_date=timezone.now(),
             site_id=settings.SITE_ID,
             is_public=True,
