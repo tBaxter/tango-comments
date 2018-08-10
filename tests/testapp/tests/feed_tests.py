@@ -6,28 +6,12 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 
-from tango_comments.models import Comment
-
 from . import CommentTestCase
-from tests.testapp.models import Article
 
 
 class CommentFeedTests(CommentTestCase):
     urls = 'testapp.urls'
     feed_url = '/rss/comments/'
-
-    def setUp(self):
-        site_2 = Site.objects.create(id=settings.SITE_ID+1,
-            domain="example2.com", name="example2.com")
-        # A comment for another site
-        c5 = Comment.objects.create(
-            content_type = ContentType.objects.get_for_model(Article),
-            object_pk = "1",
-            user_name = "Joe Somebody",
-            user_email = "jsomebody@example.com",
-            text = "A comment for the second site.",
-            site = site_2,
-        )
 
     def test_feed(self):
         response = self.client.get(self.feed_url)

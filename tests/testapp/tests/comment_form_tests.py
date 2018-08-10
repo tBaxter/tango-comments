@@ -12,6 +12,17 @@ from tests.testapp.models import Article
 
 
 class CommentFormTests(CommentTestCase):
+    def setup(self):
+        user = User.objects.create(
+            username = "frank_nobody",
+            first_name = "Frank",
+            last_name = "Nobody",
+            email = "fnobody@example.com",
+            password = "",
+            is_staff = False,
+            is_active = True,
+            is_superuser = False,
+        )
     def testInit(self):
         f = CommentForm(Article.objects.get(pk=1))
         self.assertEqual(f.initial['content_type'], str(Article._meta))

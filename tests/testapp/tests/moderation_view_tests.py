@@ -241,17 +241,6 @@ class AdminActionsTests(CommentTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, '<option value="delete_selected">')
 
-    def performActionAndCheckMessage(self, action, action_params, expected_message):
-        response = self.client.post('/admin/django_comments/comment/',
-                                    data={'_selected_action': action_params,
-                                          'action': action,
-                                          'index': 0},
-                                    follow=True)
-        messages = list(m.message for m in response.context['messages'])
-        self.assertTrue(expected_message in messages,
-                     ("Expected message '%s' wasn't set (messages were: %s)" %
-                        (expected_message, messages)))
-
     def testActionsMessageTranslations(self):
         c3, c4 = self.createSomeComments()
         many_comments = [c3.pk, c4.pk]
