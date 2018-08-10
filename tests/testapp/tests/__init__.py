@@ -1,6 +1,4 @@
-from __future__ import absolute_import
-
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.test import TestCase
@@ -13,14 +11,15 @@ from tests.testapp.models import Article, Author
 
 # Shortcut
 CT = ContentType.objects.get_for_model
+user_model = get_user_model()
 
 # Helper base class for comment tests that need data.
 @override_settings(PASSWORD_HASHERS=('django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',))
 class CommentTestCase(TestCase):
     fixtures = ["comment_tests"]
     urls = 'testapp.urls_default'
-    
-    user = User.objects.create(
+
+    user = user_model.objects.create(
             username = "frank_nobody",
             first_name = "Frank",
             last_name = "Nobody",
