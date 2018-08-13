@@ -23,7 +23,7 @@ def next_redirect(request, fallback, **get_kwargs):
     Returns an ``HttpResponseRedirect``.
     """
     next = request.POST.get('next')
-    if not is_safe_url(url=next):
+    if not is_safe_url(url=next, allowed_hosts=request.get_host()):
         next = resolve_url(fallback)
 
     if get_kwargs:

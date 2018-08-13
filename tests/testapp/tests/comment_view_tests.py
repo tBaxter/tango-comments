@@ -157,23 +157,6 @@ class CommentViewTests(CommentTestCase):
         self.assertEqual(c.user_name, u.get_full_name())
         self.assertEqual(c.user_email, u.email)
 
-    def testPostAsAuthenticatedUserWithoutFullname(self):
-        """
-        Check that the user's name in the comment is populated for
-        authenticated users without first_name and last_name.
-        """
-        user = User.objects.create_user(username='jane_other',
-                email='jane@example.com', password='jane_other')
-        a = Article.objects.get(pk=1)
-        data = self.getValidData(a)
-        data['name'] = data['email'] = ''
-        self.client.login(username="jane_other", password="jane_other")
-        self.response = self.client.post("/post/", data, REMOTE_ADDR="1.2.3.4")
-        c = Comment.objects.get(user=user)
-        self.assertEqual(c.ip_address, "1.2.3.4")
-        self.assertEqual(c.user_name, 'jane_other')
-        user.delete()
-
     def testPreventDuplicateComments(self):
         """Prevent posting the exact same comment twice"""
         a = Article.objects.get(pk=1)
