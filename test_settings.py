@@ -11,7 +11,6 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'tango_comments',
     'tests.testapp',
-    'tests.testapp.article'
 )
 
 DATABASES = {
