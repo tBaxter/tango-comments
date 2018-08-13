@@ -62,11 +62,12 @@ class CommentTestCase(TestCase):
         return c3, c4
 
     def getData(self):
+        user = self.get_user()
         return {
-            'name'      : 'Jim Bob',
+            'name'      : user.username,
             'email'     : 'jim.bob@example.com',
-            'user'      : self.get_user(),
-            'user_id'   : self.get_user().id,
+            'user'      : user,
+            'user_id'   : user.id,
             'url'       : '',
             'text'      : 'This is my comment',
         }
