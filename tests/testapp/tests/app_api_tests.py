@@ -30,22 +30,8 @@ class CommentAppAPITests(CommentTestCase):
         c = Comment(id=12345)
         self.assertEqual(tango_comments.get_approve_url(c), "/approve/12345/")
 
-
-@override_settings(
-    COMMENTS_APP='custom_comments',
-    INSTALLED_APPS=list(settings.INSTALLED_APPS) + [
-        'custom_comments'],
-)
 class CustomCommentTest(CommentTestCase):
     urls = 'testapp.urls'
-
-    def testGetModel(self):
-        from custom_comments.models import CustomComment
-        self.assertEqual(tango_comments.get_model(), CustomComment)
-
-    def testGetForm(self):
-        from custom_comments.forms import CustomCommentForm
-        self.assertEqual(tango_comments.get_form(), CustomCommentForm)
 
     def testGetFormTarget(self):
         self.assertEqual(tango_comments.get_form_target(), "/post/")

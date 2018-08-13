@@ -46,9 +46,6 @@ class CommentTemplateTagTests(CommentTestCase):
     def testRenderCommentFormFromLiteral(self):
         self.testRenderCommentForm("{% render_comment_form for testapp.article 1 %}")
 
-    def testRenderCommentFormFromObject(self):
-        self.testRenderCommentForm("{% render_comment_form for a %}")
-
     def testRenderCommentFormFromObjectWithQueryCount(self):
         with self.assertNumQueries(1):
             self.testRenderCommentFormFromObject()

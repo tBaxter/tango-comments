@@ -2,7 +2,7 @@ from django.urls import path, re_path
 
 from tango_comments.feeds import LatestCommentFeed
 
-from custom_comments import views
+from testapp import views
 
 
 feeds = {
