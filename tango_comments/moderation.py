@@ -304,7 +304,9 @@ class Moderator(object):
             model_or_iterable = [model_or_iterable]
         for model in model_or_iterable:
             if model in self._registry:
-                raise AlreadyModerated("The model '%s' is already being moderated" % model._meta.name)
+                raise AlreadyModerated(
+                    "The model '%s' is already being moderated" % model._meta.verbose_name
+                )
             self._registry[model] = moderation_class(model)
 
     def unregister(self, model_or_iterable):
