@@ -1,7 +1,5 @@
-from __future__ import absolute_import
-
 from django.contrib.contenttypes.models import ContentType
-from django.template import Template, Context, Library
+from django.template import Template, RequestContext, Library
 
 from tango_comments.forms import CommentForm
 from tango_comments.models import Comment
@@ -19,7 +17,7 @@ def noop(variable, param=None):
 class CommentTemplateTagTests(CommentTestCase):
 
     def render(self, t, **c):
-        ctx = Context(c)
+        ctx = RequestContext(c)
         out = Template(t).render(ctx)
         return ctx, out
 
@@ -29,7 +27,7 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def testGetCommentForm(self, tag=None):
         t = "{% load comments %}" + (tag or "{% get_comment_form for testapp.article a.id as form %}")
-        out = Template(t).render(Context({'a': Article.objects.get(pk=1)}))
+        out = Template(t).render(RequestContext({'a': Article.objects.get(pk=1)}))
         self.assertEqual(out, "")
         #self.assertTrue(isinstance(ctx["form"], CommentForm))
 
@@ -41,7 +39,7 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def testRenderCommentForm(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_form for testapp.article a.id %}")
-        out = Template(t).render(Context({'a': Article.objects.get(pk=1)}))
+        out = Template(t).render(RequestContext({'a': Article.objects.get(pk=1)}))
         self.assertTrue(out.strip().startswith("<form action="))
         self.assertTrue(out.strip().endswith("</form>"))
 
