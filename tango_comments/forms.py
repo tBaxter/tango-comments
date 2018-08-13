@@ -2,6 +2,7 @@ import time
 
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.forms.utils import ErrorDict
 from django.utils.crypto import salted_hmac, constant_time_compare
@@ -138,11 +139,12 @@ class CommentDetailsForm(CommentSecurityForm):
         custom comment apps that override get_comment_model can override this
         method to add extra fields onto a custom comment model.
         """
+        user_model = get_user_model()
         return dict(
             content_type=ContentType.objects.get_for_model(self.target_object),
             object_pk=force_text(self.target_object._get_pk_val()),
             text=self.cleaned_data["text"],
-            user=self.user,
+            user=user_model.objects.latest(),
             post_date=timezone.now(),
             site_id=settings.SITE_ID,
             is_public=True,
