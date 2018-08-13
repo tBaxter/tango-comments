@@ -72,7 +72,7 @@ class CommentTemplateTagTests(CommentTestCase):
         self.createSomeComments()
         self.verifyGetCommentCount("{% get_comment_count for a as cc %}")
 
-   def verifyGetCommentList(self, tag=None):
+    def verifyGetCommentList(self, tag=None):
         c2 = Comment.objects.all()[1]
         t = "{% load comments %}" +  (tag or "{% get_comment_list for testapp.author a.id as cl %}")
         ctx, out = self.render(t, a=Author.objects.get(pk=1))
