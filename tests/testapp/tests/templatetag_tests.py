@@ -39,9 +39,6 @@ class CommentTemplateTagTests(CommentTestCase):
     def testGetCommentFormFromObject(self):
         self.testGetCommentForm("{% get_comment_form for a as form %}")
 
-    def testWhitespaceInGetCommentFormTag(self):
-        self.testGetCommentForm("{% load comment_testtags %}{% get_comment_form for a|noop:'x y' as form %}")
-
     def testRenderCommentForm(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_form for testapp.article a.id %}")
         out = Template(t).render(Context({'a': Article.objects.get(pk=1)}))
@@ -53,9 +50,6 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def testRenderCommentFormFromObject(self):
         self.testRenderCommentForm("{% render_comment_form for a %}")
-
-    def testWhitespaceInRenderCommentFormTag(self):
-        self.testRenderCommentForm("{% load comment_testtags %}{% render_comment_form for a|noop:'x y' %}")
 
     def testRenderCommentFormFromObjectWithQueryCount(self):
         with self.assertNumQueries(1):
@@ -78,11 +72,7 @@ class CommentTemplateTagTests(CommentTestCase):
         self.createSomeComments()
         self.verifyGetCommentCount("{% get_comment_count for a as cc %}")
 
-    def testWhitespaceInGetCommentCountTag(self):
-        self.createSomeComments()
-        self.verifyGetCommentCount("{% load comment_testtags %}{% get_comment_count for a|noop:'x y' as cc %}")
-
-    def verifyGetCommentList(self, tag=None):
+   def verifyGetCommentList(self, tag=None):
         c2 = Comment.objects.all()[1]
         t = "{% load comments %}" +  (tag or "{% get_comment_list for testapp.author a.id as cl %}")
         ctx, out = self.render(t, a=Author.objects.get(pk=1))
@@ -101,10 +91,6 @@ class CommentTemplateTagTests(CommentTestCase):
         self.createSomeComments()
         self.verifyGetCommentList("{% get_comment_list for a as cl %}")
 
-    def testWhitespaceInGetCommentListTag(self):
-        self.createSomeComments()
-        self.verifyGetCommentList("{% load comment_testtags %}{% get_comment_list for a|noop:'x y' as cl %}")
-
     def testRenderCommentList(self, tag=None):
         t = "{% load comments %}" + (tag or "{% render_comment_list for testapp.article a.id %}")
         out = self.render(t, a=Article.objects.get(pk=1))[1]
@@ -116,9 +102,6 @@ class CommentTemplateTagTests(CommentTestCase):
 
     def testRenderCommentListFromObject(self):
         self.testRenderCommentList("{% render_comment_list for a %}")
-
-    def testWhitespaceInRenderCommentListTag(self):
-        self.testRenderCommentList("{% load comment_testtags %}{% render_comment_list for a|noop:'x y' %}")
 
     def testNumberQueries(self):
         """
