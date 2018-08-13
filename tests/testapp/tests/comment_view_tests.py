@@ -1,4 +1,4 @@
-from __future__ import absolute_import, unicode_literals
+import unittest
 
 import re
 
@@ -13,6 +13,7 @@ from tests.testapp.models import Article, Book
 
 
 post_redirect_re = re.compile(r'^http://testserver/posted/\?c=(?P<pk>\d+$)')
+
 
 class CommentViewTests(CommentTestCase):
 
