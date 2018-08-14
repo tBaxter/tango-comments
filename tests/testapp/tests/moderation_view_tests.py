@@ -183,7 +183,7 @@ class ApproveViewTests(CommentTestCase):
         pk = comments[0].pk
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.get("/approve/%d/" % pk)
-        self.assertEqual(response["Location"], "http://testserver/accounts/login/?next=/approve/%d/" % pk)
+        self.assertEqual(response["Location"], "/accounts/login/?next=/approve/%d/" % pk)
 
         makeModerator("normaluser")
         response = self.client.get("/approve/%d/" % pk)
