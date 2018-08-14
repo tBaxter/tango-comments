@@ -1,7 +1,11 @@
 # Tango Comments Change Log
 
+## 0.10.0 
+* Numerous changes around Python 3.5 and Django 2.0 compatibility
+* Removed unwanted features, such as unauthenticated commenting.
+
 ## 0.9.0
-Corrected defects around Django 2.0 updae
+Corrected defects around Django 2.0 update
 
 ## 0.8.1
 Updated imports

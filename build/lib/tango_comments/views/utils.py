@@ -3,14 +3,10 @@ A few bits of helper functions for comment views.
 """
 
 import textwrap
-try:
-    from urllib.parse import urlencode
-except ImportError:     # Python 2
-    from urllib import urlencode
+from urllib.parse import urlencode
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response, resolve_url
-from django.template import RequestContext
+from django.shortcuts import render, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.http import is_safe_url
 
@@ -27,7 +23,7 @@ def next_redirect(request, fallback, **get_kwargs):
     Returns an ``HttpResponseRedirect``.
     """
     next = request.POST.get('next')
-    if not is_safe_url(url=next, host=request.get_host()):
+    if not is_safe_url(url=next, allowed_hosts=request.get_host()):
         next = resolve_url(fallback)
 
     if get_kwargs:
@@ -54,10 +50,7 @@ def confirmation_view(template, doc="Display a confirmation view."):
                 comment = comments.get_model().objects.get(pk=request.GET['c'])
             except (ObjectDoesNotExist, ValueError):
                 pass
-        return render_to_response(template,
-            {'comment': comment},
-            context_instance=RequestContext(request)
-        )
+        return render(request, template, {'comment': comment})
 
     confirmed.__doc__ = textwrap.dedent("""\
         %s

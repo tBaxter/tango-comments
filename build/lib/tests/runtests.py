@@ -22,7 +22,6 @@ settings.configure(
         "django.contrib.admin",
         "tango_comments",
         "testapp",
-        "custom_comments",
     ],
     ROOT_URLCONF = 'testapp.urls',
     SECRET_KEY = "it's a secret to everyone",

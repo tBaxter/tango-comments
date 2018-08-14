@@ -57,7 +57,7 @@ class.
 import datetime
 
 from django.conf import settings
-from django.contrib.sites.models import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models.base import ModelBase
 from django.template import Context, loader
@@ -304,7 +304,9 @@ class Moderator(object):
             model_or_iterable = [model_or_iterable]
         for model in model_or_iterable:
             if model in self._registry:
-                raise AlreadyModerated("The model '%s' is already being moderated" % model._meta.module_name)
+                raise AlreadyModerated(
+                    "The model '%s' is already being moderated" % model._meta.verbose_name
+                )
             self._registry[model] = moderation_class(model)
 
     def unregister(self, model_or_iterable):
