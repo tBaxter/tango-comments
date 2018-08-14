@@ -22,7 +22,9 @@ DATABASES = {
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'tango_comments.tests.testapp.urls_default'
+#ROOT_URLCONF = 'tango_comments.urls'
+ROOT_URLCONF = 'tests.testapp.urls_default'
+
 
 AUTH_USER_MODEL = 'auth.User'
 
