@@ -14,7 +14,7 @@ feeds = {
 urlpatterns = [
     path('', include('tango_comments.urls')),
     path('accounts/login/', auth_views.login, {'template_name': 'login.html'}),
-    path('accounts/logout/', auth_views.logout'),
+    path('accounts/logout/', auth_views.logout),
     path('post/', views.custom_submit_comment),
     re_path(r'^flag/(\d+)/$', views.custom_flag_comment),
     re_path(r'^delete/(\d+)/$', views.custom_delete_comment),
