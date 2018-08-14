@@ -26,7 +26,7 @@ class FlagViewTests(CommentTestCase):
         pk = comments[0].pk
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.post("/flag/%d/" % pk)
-        self.assertEqual(response["Location"], "http://testserver/flagged/?c=%d" % pk)
+        self.assertEqual(response["Location"], "/flagged/?c=%d" % pk)
         c = Comment.objects.get(pk=pk)
         self.assertEqual(c.flags.filter(flag=CommentFlag.SUGGEST_REMOVAL).count(), 1)
         return c
@@ -39,8 +39,7 @@ class FlagViewTests(CommentTestCase):
         pk = comments[0].pk
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.post("/flag/%d/" % pk, {'next': "/go/here/"})
-        self.assertEqual(response["Location"],
-            "http://testserver/go/here/?c=%d" % pk)
+        self.assertEqual(response["Location"], "/go/here/?c=%d" % pk)
 
     def testFlagPostUnsafeNext(self):
         """
@@ -52,8 +51,7 @@ class FlagViewTests(CommentTestCase):
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.post("/flag/%d/" % pk,
             {'next': "http://elsewhere/bad"})
-        self.assertEqual(response["Location"],
-            "http://testserver/flagged/?c=%d" % pk)
+        self.assertEqual(response["Location"], "/flagged/?c=%d" % pk)
 
     def testFlagPostTwice(self):
         """Users don't get to flag comments more than once."""
@@ -67,9 +65,9 @@ class FlagViewTests(CommentTestCase):
         comments = self.createSomeComments()
         pk = comments[0].pk
         response = self.client.get("/flag/%d/" % pk)
-        self.assertEqual(response["Location"], "http://testserver/accounts/login/?next=/flag/%d/" % pk)
+        self.assertEqual(response["Location"], "/accounts/login/?next=/flag/%d/" % pk)
         response = self.client.post("/flag/%d/" % pk)
-        self.assertEqual(response["Location"], "http://testserver/accounts/login/?next=/flag/%d/" % pk)
+        self.assertEqual(response["Location"], "/accounts/login/?next=/flag/%d/" % pk)
 
     def testFlaggedView(self):
         comments = self.createSomeComments()
@@ -110,7 +108,7 @@ class DeleteViewTests(CommentTestCase):
         pk = comments[0].pk
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.get("/delete/%d/" % pk)
-        self.assertEqual(response["Location"], "http://testserver/accounts/login/?next=/delete/%d/" % pk)
+        self.assertEqual(response["Location"], "/accounts/login/?next=/delete/%d/" % pk)
 
         makeModerator("normaluser")
         response = self.client.get("/delete/%d/" % pk)
@@ -123,7 +121,7 @@ class DeleteViewTests(CommentTestCase):
         makeModerator("normaluser")
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.post("/delete/%d/" % pk)
-        self.assertEqual(response["Location"], "http://testserver/deleted/?c=%d" % pk)
+        self.assertEqual(response["Location"], "/deleted/?c=%d" % pk)
         c = Comment.objects.get(pk=pk)
         self.assertTrue(c.is_removed)
         self.assertEqual(c.flags.filter(flag=CommentFlag.MODERATOR_DELETION, user__username="normaluser").count(), 1)
@@ -138,8 +136,7 @@ class DeleteViewTests(CommentTestCase):
         makeModerator("normaluser")
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.post("/delete/%d/" % pk, {'next': "/go/here/"})
-        self.assertEqual(response["Location"],
-            "http://testserver/go/here/?c=%d" % pk)
+        self.assertEqual(response["Location"], "/go/here/?c=%d" % pk)
 
     def testDeletePostUnsafeNext(self):
         """
@@ -152,8 +149,7 @@ class DeleteViewTests(CommentTestCase):
         self.client.login(username="normaluser", password="normaluser")
         response = self.client.post("/delete/%d/" % pk,
             {'next': "http://elsewhere/bad"})
-        self.assertEqual(response["Location"],
-            "http://testserver/deleted/?c=%d" % pk)
+        self.assertEqual(response["Location"], "/deleted/?c=%d" % pk)
 
     def testDeleteSignals(self):
         def receive(sender, **kwargs):

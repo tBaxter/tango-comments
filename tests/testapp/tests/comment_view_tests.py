@@ -12,7 +12,7 @@ from . import CommentTestCase
 from tests.testapp.models import Article, Book
 
 
-post_redirect_re = re.compile(r'^http://testserver/posted/\?c=(?P<pk>\d+$)')
+post_redirect_re = re.compile(r'^/posted/\?c=(?P<pk>\d+$)')
 
 
 class CommentViewTests(CommentTestCase):
@@ -159,7 +159,7 @@ class CommentViewTests(CommentTestCase):
         data["comment"] = "This is another comment"
         response = self.client.post("/post/", data)
         location = response["Location"]
-        match = re.search(r"^http://testserver/somewhere/else/\?c=\d+$", location)
+        match = re.search(r"^/somewhere/else/\?c=\d+$", location)
         self.assertTrue(match != None, "Unexpected redirect location: %s" % location)
 
         data["next"] = "http://badserver/somewhere/else/"
@@ -193,7 +193,7 @@ class CommentViewTests(CommentTestCase):
         data["comment"] = "This is another comment"
         response = self.client.post("/post/", data)
         location = response["Location"]
-        match = re.search(r"^http://testserver/somewhere/else/\?foo=bar&c=\d+$", location)
+        match = re.search(r"^/somewhere/else/\?foo=bar&c=\d+$", location)
         self.assertTrue(match != None, "Unexpected redirect location: %s" % location)
 
     @unittest.skip("Key error for location. Maybe due to bad post")
@@ -224,7 +224,7 @@ class CommentViewTests(CommentTestCase):
         data["comment"] = "This is another comment"
         response = self.client.post("/post/", data)
         location = response["Location"]
-        match = re.search(r"^http://testserver/somewhere/else/\?foo=bar&c=\d+#baz$", location)
+        match = re.search(r"^/somewhere/else/\?foo=bar&c=\d+#baz$", location)
         self.assertTrue(match != None, "Unexpected redirect location: %s" % location)
 
         # Without a query string
@@ -234,5 +234,5 @@ class CommentViewTests(CommentTestCase):
         data["comment"] = "This is another comment"
         response = self.client.post("/post/", data)
         location = response["Location"]
-        match = re.search(r"^http://testserver/somewhere/else/\?c=\d+#baz$", location)
+        match = re.search(r"^/somewhere/else/\?c=\d+#baz$", location)
         self.assertTrue(match != None, "Unexpected redirect location: %s" % location)
