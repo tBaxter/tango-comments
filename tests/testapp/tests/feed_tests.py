@@ -1,14 +1,15 @@
 from xml.etree import ElementTree as ET
 
+from django.urls import reverse
+
 from . import CommentTestCase
 
 
 class CommentFeedTests(CommentTestCase):
     urls = 'testapp.urls'
-    feed_url = '/rss/comments/'
 
     def test_feed(self):
-        response = self.client.get(self.feed_url)
+        response = self.client.get(reverse('comments-feed'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'application/rss+xml; charset=utf-8')
 

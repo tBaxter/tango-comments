@@ -1,9 +1,9 @@
-from __future__ import absolute_import
-
 import time
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+
 from tango_comments.forms import CommentForm
 from tango_comments.models import Comment
 

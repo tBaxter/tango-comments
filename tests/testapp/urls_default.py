@@ -20,5 +20,5 @@ urlpatterns = [
     re_path(r'^delete/(\d+)/$', views.custom_delete_comment),
     re_path(r'^approve/(\d+)/$', views.custom_approve_comment),
     re_path(r'^cr/(\d+)/(.+)/$', shortcut, name='comments-url-redirect'),
-    path('rss/comments/', LatestCommentFeed),
+    path('rss/comments/', LatestCommentFeed , name="comments-feed"),
 ]
