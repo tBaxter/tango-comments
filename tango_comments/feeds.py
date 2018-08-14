@@ -1,5 +1,5 @@
 from django.contrib.syndication.views import Feed
-from django.contrib.sites.models import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import ugettext as _
 
 import tango_comments as comments
