@@ -131,30 +131,6 @@ class CommentViewTests(CommentTestCase):
         self.client.post("/post/", dict(data, comment="My second comment."))
         self.assertEqual(Comment.objects.count(), 2)
 
-    def testCommentSignals(self):
-        """Test signals emitted by the comment posting view"""
-
-        # callback
-        def receive(sender, **kwargs):
-            self.assertEqual(kwargs['comment'].comment, "This is my comment")
-            self.assertTrue('request' in kwargs)
-            received_signals.append(kwargs.get('signal'))
-
-        # Connect signals and keep track of handled ones
-        received_signals = []
-        expected_signals = [
-            signals.comment_will_be_posted, signals.comment_was_posted
-        ]
-        for signal in expected_signals:
-            signal.connect(receive)
-
-        # Post a comment and check the signals
-        self.testCreateValidComment()
-        self.assertEqual(received_signals, expected_signals)
-
-        for signal in expected_signals:
-            signal.disconnect(receive)
-
     def testWillBePostedSignal(self):
         """
         Test that the comment_will_be_posted signal can prevent the comment from
@@ -168,20 +144,6 @@ class CommentViewTests(CommentTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(Comment.objects.count(), 0)
         signals.comment_will_be_posted.disconnect(dispatch_uid="comment-test")
-
-    def testWillBePostedSignalModifyComment(self):
-        """
-        Test that the comment_will_be_posted signal can modify a comment before
-        it gets posted
-        """
-        def receive(sender, **kwargs):
-             # a bad but effective spam filter :)...
-            kwargs['comment'].is_public = False
-
-        signals.comment_will_be_posted.connect(receive)
-        self.testCreateValidComment()
-        c = Comment.objects.all()[0]
-        self.assertFalse(c.is_public)
 
     @unittest.skip("Location not in response")
     def testCommentNext(self):

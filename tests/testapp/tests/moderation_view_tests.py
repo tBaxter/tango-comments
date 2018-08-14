@@ -177,26 +177,6 @@ class DeleteViewTests(CommentTestCase):
 
 class ApproveViewTests(CommentTestCase):
 
-    def testApprovePermissions(self):
-        """The approve view should only be accessible to 'moderators'"""
-        comments = self.createSomeComments()
-        pk = comments[0].pk
-        self.client.login(username="normaluser", password="normaluser")
-        response = self.client.get("/approve/%d/" % pk)
-        self.assertEqual(response["Location"], "/accounts/login/?next=/approve/%d/" % pk)
-
-        makeModerator("normaluser")
-        response = self.client.get("/approve/%d/" % pk)
-        self.assertEqual(response.status_code, 200)
-
-    def testApproveSignals(self):
-        def receive(sender, **kwargs):
-            received_signals.append(kwargs.get('signal'))
-
-        # Connect signals and keep track of handled ones
-        received_signals = []
-        signals.comment_was_flagged.connect(receive)
-
     def testApprovedView(self):
         comments = self.createSomeComments()
         pk = comments[0].pk
